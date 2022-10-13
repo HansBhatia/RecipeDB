@@ -32,6 +32,7 @@ const HomePage: NextPage = () => {
 
   return (<>
     <Container alignItems="center" justify='center' wrap='wrap' fluid responsive>
+      <Spacer y={8} />
       <Image
         width={320}
         height={180}

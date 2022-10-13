@@ -14,14 +14,14 @@ const Header = () => {
                     RecipeDB
                 </Text>
             </Navbar.Brand>
-            <Navbar.Content hideIn="xs">
-                <Navbar.Link css={{ color: "black !important", textDecoration: "underline" }} href="#">Home</Navbar.Link>
+            <Navbar.Content css={{ color: "black !important", textDecoration: "underline" }} hideIn="xs">
+                <Navbar.Link href="#">Home</Navbar.Link>
             </Navbar.Content>
             <Navbar.Content>
-                <Navbar.Link color="inherit" href="#">
+                <Navbar.Link color="inherit" href="#" css={{ 'font-size ': 'large !important' }}>
                     Login
                 </Navbar.Link>
-                <Navbar.Link color="inherit" href="#">
+                <Navbar.Link color="inherit" href="#" css={{ 'font-size ': 'large !important' }}>
                     Sign Up
                 </Navbar.Link>
             </Navbar.Content>
