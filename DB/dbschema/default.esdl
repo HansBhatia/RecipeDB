@@ -30,6 +30,9 @@ module default {
     required property name -> str;
     property prepTime -> duration;
     property cuisine -> str;
+    property calories -> int16;
+    property image -> str;
+    property prepSteps -> array<str>;
   }
 
   type Rating {
