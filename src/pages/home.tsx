@@ -1,6 +1,8 @@
-import { NextPage } from 'next/types';
-import { useState, useEffect } from 'react';
-import { Container, Input, Row, Image, Spacer } from "@nextui-org/react";
+import { Button, IconButton, Input, useColorMode } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { NextPage } from "next/types";
+import { useState } from "react";
+import { RiMoonFill, RiSunLine } from "react-icons/ri";
 
 type Post = {
   id: string;
@@ -9,15 +11,16 @@ type Post = {
 };
 
 const HomePage: NextPage = () => {
+  const router = useRouter();
   const posts: Post[] = [
     {
-      id: 'post1',
-      title: 'This one weird trick makes using databases fun',
-      content: 'Use EdgeDB',
+      id: "post1",
+      title: "This one weird trick makes using databases fun",
+      content: "Use EdgeDB",
     },
     {
-      id: 'post2',
-      title: 'How to build a blog with EdgeDB and Next.js',
+      id: "post2",
+      title: "How to build a blog with EdgeDB and Next.js",
       content: "Let's start by scaffolding our app...",
     },
   ];
@@ -30,42 +33,38 @@ const HomePage: NextPage = () => {
   //    }, []);
   if (!posts) return <p>Loading...</p>;
 
-  return (<>
-    <Container alignItems="center" justify='center' wrap='wrap' fluid responsive>
-      <Spacer y={8} />
-      <Image
-        width={320}
-        height={180}
-        src="https://github.com/nextui-org/nextui/blob/next/apps/docs/public/nextui-banner.jpeg?raw=true"
-        alt="Default Image"
-        objectFit="cover"
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const [value, setValue] = useState("");
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(value);
+    router.push(`recipe/${value}`);
+    // Do work on this string
+    //location.assign("http://www.mozilla.org");
+  };
+  return (
+    <>
+      <IconButton
+        aria-label="theme toggle"
+        icon={colorMode === "light" ? <RiMoonFill /> : <RiSunLine />}
+        onClick={toggleColorMode}
       />
-      <Spacer y={2} />
-      <Row justify="center" align="center">
+      <form onSubmit={handleSubmit}>
         <Input
-          clearable
-          css={{
-            margin: 'auto',
-            w: "50%",
-            "@xsMax": {
-              mw: "300px",
-            },
-          }}
-          placeholder="Search..."
+          placeholder={"Search"}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          required
         />
-      </Row>
-    </Container>
-  </>)
-  {/* {posts.map((post) => {
-      return (<>
-        <a href={`/post/${post.id}`} key={post.id}>
-          <div>
-            <p>{post.title}</p>
-          </div>
-        </a>
-      </>
-      );
-    })} */}
-}
+        <Button type="submit">Search</Button>
+      </form>
+    </>
+  );
+};
 
 export default HomePage;

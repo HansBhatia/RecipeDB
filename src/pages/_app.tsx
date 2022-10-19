@@ -1,16 +1,14 @@
-import type { AppProps } from 'next/app'
-
-// 1. import `NextUIProvider` component
-import { NextUIProvider } from '@nextui-org/react';
-import Header from '../lib/layout/header';
+import { ChakraProvider } from "@chakra-ui/react";
+import type { AppProps } from "next/app";
+import Layout from "../lib/components/layout/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <NextUIProvider>
-      <Header/>
-      <Component {...pageProps} />
-    </NextUIProvider>
+    <ChakraProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ChakraProvider>
   );
 }
-
-export default MyApp
+export default MyApp;
