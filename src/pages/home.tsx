@@ -30,9 +30,9 @@ const HomePage: NextPage = () => {
   //    }, []);
   if (!posts) return <p>Loading...</p>;
 
-  return (<>
-    <Container alignItems="center" justify='center' wrap='wrap' fluid responsive>
-      <Spacer y={8} />
+  return (<Container css={{ height: '100vh' }}>
+    <Container alignItems="center" justify='center' wrap='wrap' css={{ width: '100%', height: '100%' }} fluid responsive>
+      {/* <Spacer y={8} /> */}
       <Image
         width={320}
         height={180}
@@ -55,7 +55,7 @@ const HomePage: NextPage = () => {
         />
       </Row>
     </Container>
-  </>)
+  </Container>)
   {/* {posts.map((post) => {
       return (<>
         <a href={`/post/${post.id}`} key={post.id}>
