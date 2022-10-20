@@ -28,7 +28,12 @@ def rec_table_to_posts(resp, add_index=False):
                 # col_name: cuisine
                 st.text(f'Cuisine: {item[2].capitalize()}')
                 # col_name: rating
-                st.text(f'Rating: {random.randint(65, 100)}')
+                check_rating = recipe_id_to_rating.format(item[0])
+                res = db.query(check_rating)
+                if res == []:
+                    st.text('Rating: Not Rated Yet, be the first!')
+                else:
+                    st.text(f'Rating: {res[0][0]}')
                 if user_signed_in:
                     with st.form('Rate' + str(c)):
                         number = st.number_input('Rate 1-5', min_value=1, max_value=5)
