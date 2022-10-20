@@ -2,25 +2,26 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import db
 from queries import *
-from PIL import Image
-import random
-
+import auth_lib
+from db_schema_helpers import *
 # horizontal Menu
-selected2 = option_menu(None, ["Search", "Home", "About", "Login"],
-icons=['search', 'house', 'cloud-upload', 'user'],
+selected2 = option_menu(None, ["Search", "Popular Recipes", "About", "Login/SignUp"],
+icons=['search', 'star', 'cloud-upload', 'user'],
 menu_icon="cast", default_index=0, orientation="horizontal")
 
+# check logged in
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
+    st.session_state['user'] = {}
+
+if not(st.session_state['logged_in']):
+    st.info('Please login to rate the recipes!', icon="ℹ️")
 if selected2 == "Home":
     st.write('you are at Home')
 elif selected2 == "About":
-    st.markdown('''
-                ***This is a Recipe Database***
--   Takes Inputted leftover ingredients and Returns a list of Recipes available
--   Common recipe's searchable based on features.
--   Have features including "Preparation Time", "Rating", "Diet Preferance", "Cuisine", "Common meals", "Time of day" readily available to filter on.
--   Recipe creation, updation and deletion on user
--   Personalised accounts with user login.
-                ''')
+    # prints out the md file
+    with open('../README.md') as f:
+        st.markdown(f.read())
 elif selected2 == "Search":
     with st.form("search_form"):
         query = st.text_input('Search')
@@ -57,34 +58,51 @@ elif selected2 == "Search":
             # get recipe objects
             query_string = recipe_from_id.format(f'({query_string})')
             resp = db.query(query_string)
-        print(query_string)
         ###PRINT POSTS###
-        for item in resp:
-            col1, col2 = st.columns([2, 2])
-            with col1:
-                # col_name: image
-                # change this later.. need to fetch the file first
-                image = Image.open('coconut.jpeg')
-                new_image = image.resize((600, 400))
-                st.image(new_image)
-                #st.image('https://post.healthline.com/wp-content/uploads/2020/01/coconut-holding-fruit-1200x628-facebook.jpg')
-            with col2:
-                # col_name: name
-                st.text(item[1])
-                # col_name: time
-                st.text(f'Prep Time: {item[4]} minutes')
-                # col_name: calories
-                st.text(f'Calories: {item[3]} calories')
-                # col_name: cuisine
-                st.text(f'Cuisine: {item[2].capitalize()}')
-                # col_name: rating
-                st.text(f'Rating: {random.randint(65, 100)}')
-elif selected2 == "Login":
-    with st.form("search_form"):
-        username = st.text_input('Username')
-        password = st.text_input("Password", type="password", key="password")
-        submitted = st.form_submit_button("Sign In")
-    if submitted:
-        # verify
-        st.success('Done!')
-            
+        rec_table_to_posts(resp)
+elif selected2 == "Login/SignUp":
+    if st.session_state['logged_in']:
+        st.write('You are Logged In!')
+        if st.button('Logout'):
+            st.session_state['logged_in'] = False
+            st.experimental_rerun()
+    else:
+        LoginSignUpT = st.radio("Type", ('Login', 'SignUp'))      
+        if LoginSignUpT == 'Login':
+            with st.form("search_form"):
+                username = st.text_input('Username')
+                password = st.text_input("Password", type="password", key="password")
+                submitted = st.form_submit_button("Sign In")
+            if submitted:
+                # verify
+                if auth_lib.validatePassword(username, password):
+                    st.session_state['logged_in'] = True
+                    st.success('Done!')
+                    st.experimental_rerun()
+                else:
+                    st.error('Invalid Credentials')
+        elif LoginSignUpT == 'SignUp':
+            with st.form("detail_form"):
+                username = st.text_input('Username')
+                password = st.text_input("Password", type="password", key="password")
+                password2 = st.text_input("Re-enter Password", type="password", key="password2")
+                submitted = st.form_submit_button("Sign Up")
+            if submitted:
+                # verify
+                if password != password2:
+                    st.error('Passwords do not match!')
+                else:
+                    # TODO fix the signup insert issue
+                    u_obj = auth_lib.createUser(username, 'test@gmail.com', password, 'test.url')
+                    print(u_obj)
+                    if u_obj != []:
+                        st.success('Done')
+                        LoginSignUpT = 'Login'
+                        st.experimental_rerun()
+                    else:
+                        st.error('Error invalid username/password')
+elif selected2 == "Popular Recipes":
+    count = 5
+    resp = db.query(get_top_n_recipes.format(5))
+    ###PRINT POSTS### MIGHT BE UNORDERED TODO
+    rec_table_to_posts(resp, add_index=True)

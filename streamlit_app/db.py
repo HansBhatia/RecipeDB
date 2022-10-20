@@ -11,11 +11,11 @@ def query(q: str):
     try:
         cursor.execute(q)
         #cursor.execute('SELECT * from DietRestrictions;')
-    except:
+    except Exception as e:
+        print(e)
         return []
 
     response = cursor.fetchall()
-    print(response)
     cursor.close()
     cnx.close()
     return response

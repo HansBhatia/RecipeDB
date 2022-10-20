@@ -1,4 +1,5 @@
 mysql-connector-python
 streamlit
 streamlit-option-menu
+streamlit_authenticator
 python-dotenv
