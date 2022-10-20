@@ -18,12 +18,10 @@ CREATE TABLE User(
     username varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-    profilePicture varchar(255),
-    -- ??????
-    -- should length of profile pic be larger(cuz url)
-    -- ??????
+    profilePicture varchar(2500),
     PRIMARY KEY(userId),
-    CONSTRAINT UC_user_email UNIQUE(email)
+    CONSTRAINT UC_user_email UNIQUE(email),
+    CONSTRAINT UC_user_username UNIQUE(username)
 );
 
 CREATE TABLE FavoriteRecipes(

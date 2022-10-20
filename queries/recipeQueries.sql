@@ -19,15 +19,12 @@ SELECT nr FROM NumRatings WHERE recipeId = <RECIPE_ID>;
 -- Query for average rating a recipe has
 SELECT ar FROM AvgRating WHERE recipeId = <RECIPE_ID>;
 
+-- Query to select the top X recipes by Rating
+SELECT recipeId FROM AvgRating ORDER BY ar DESC LIMIT <X>;
+
 -- Query for all dietary restrictions a recipe has (returns dietary restriction names)
 SELECT name
 FROM DietRestrictions
 WHERE restrictionId IN (SELECT restrictionId
                         FROM RecipeRestrictions
                         WHERE recipeId = <RECIPE_ID>);
-
-                        
--- query to select top 5
-SELECT * FROM Recipe as r, Rating as n
- WHERE r.recipeId = n.recipeId
- ORDER BY n.value DESC limit 5
