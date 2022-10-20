@@ -31,9 +31,9 @@ def rec_table_to_posts(resp, add_index=False):
                 check_rating = recipe_id_to_rating.format(item[0])
                 res = db.query(check_rating)
                 if res == []:
-                    st.text('Rating: Not Rated Yet, be the first!')
+                    st.text('Number of Ratings: Not Rated Yet, be the first!')
                 else:
-                    st.text(f'Rating: {res[0][0]}')
+                    st.text(f'Number of Ratings: {res[0][0]}')
                 if user_signed_in:
                     with st.form('Rate' + str(c)):
                         number = st.number_input('Rate 1-5', min_value=1, max_value=5, value=5)
@@ -42,6 +42,6 @@ def rec_table_to_posts(resp, add_index=False):
                             # TODO fix the rating insert issue
                             query_string = user_add_rating.format(st.session_state['user_obj']['id'], item[0], number, number)
                             print(query_string)
-                            db.query(query_string)
+                            db.query(query_string, insert=True)
                             st.write("Thanks for your rating!")
                             st.experimental_rerun()

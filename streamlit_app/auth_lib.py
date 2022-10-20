@@ -2,7 +2,7 @@ import db
 
 def createUser(username, email, password, profilePicture):
     try:
-        resp = db.query(f'INSERT INTO User (username, email, password, profilePicture) VALUES("{username}","{email}","{password}","{profilePicture}")')
+        resp = db.query(f'INSERT INTO User (username, email, password, profilePicture) VALUES("{username}","{email}","{password}","{profilePicture}")', insert=True)
         return findUser(username)
     except Exception as e:
         print(e)
