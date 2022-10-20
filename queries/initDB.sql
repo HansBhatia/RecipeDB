@@ -64,7 +64,7 @@ CREATE INDEX IDX_ingred_recipeId ON Ingredients(recipeId);
 CREATE INDEX IDX_ingred_foodId ON Ingredients(foodId);
 
 CREATE TABLE DietRestrictions(
-    restrictionId int NOT NULL,
+    restrictionId int NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     PRIMARY KEY(restrictionId),
     CONSTRAINT UC_dietres_name UNIQUE(name)
