@@ -1,3 +1,4 @@
 mysql-connector-python
 streamlit
 streamlit-option-menu
+PIL
