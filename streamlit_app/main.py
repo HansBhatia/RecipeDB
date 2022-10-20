@@ -4,6 +4,22 @@ import db
 from queries import *
 import auth_lib
 from db_schema_helpers import *
+import time
+
+col1, col2, col3 = st.columns(3)
+with col1:
+    " "
+image = Image.open('cooking.jpeg')
+with col2:
+    st.image(image, caption='') 
+with col3:
+    " "
+
+st.markdown("<h1 style='text-align: center; color: black;'>ReciepeDB</h1>", unsafe_allow_html=True)
+
+st.markdown("<h4 style='text-align: center; color: grey;'>Search for ingredients or recipes bellow! </h2>", unsafe_allow_html=True)
+
+
 # horizontal Menu
 selected2 = option_menu(None, ["Search", "Popular Recipes", "About", "Login/SignUp"],
 icons=['search', 'star', 'cloud-upload', 'user'],
@@ -28,6 +44,9 @@ elif selected2 == "Search":
         genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
         submitted = st.form_submit_button("Go")
     if submitted:
+        with st.spinner('Searching...'):
+            time.sleep(3)
+        st.success('Done!')
         st.write(f'you searched for {query}')
         search_items = list(map(lambda x: x.strip(), query.split(',')))
         query_string = ''
