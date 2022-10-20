@@ -25,3 +25,9 @@ FROM DietRestrictions
 WHERE restrictionId IN (SELECT restrictionId
                         FROM RecipeRestrictions
                         WHERE recipeId = <RECIPE_ID>);
+
+                        
+-- query to select top 5
+SELECT * FROM Recipe as r, Rating as n
+ WHERE r.recipeId = n.recipeId
+ ORDER BY n.value DESC limit 5

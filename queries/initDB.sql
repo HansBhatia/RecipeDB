@@ -19,6 +19,9 @@ CREATE TABLE User(
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     profilePicture varchar(255),
+    -- ??????
+    -- should length of profile pic be larger(cuz url)
+    -- ??????
     PRIMARY KEY(userId),
     CONSTRAINT UC_user_email UNIQUE(email)
 );
