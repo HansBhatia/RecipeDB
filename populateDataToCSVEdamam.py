@@ -49,7 +49,7 @@ def run():
         calories.append(round(recipe['calories']))
         ingredientLines.append(recipe['ingredientLines'])
         url.append(recipe['uri'])
-        # ingrQuantity.append(recipe['ingredients[quantity]')
+        # ingrQuantity.append(recipe['ingredients[quantity]'])
         # ingrMeasure.append(recipe['ingredients[measure]'])
         # ingrFood.append(recipe['ingredients[food]'])
         # ingrFoodId.append(recipe['ingredients[foodId]'])
