@@ -1,31 +1,27 @@
 import db
 
 def createUser(username, email, password, profilePicture):
-    user = {
-        'username': username,
-        'email': email,
-        'password': password,
-        'profilePicture': profilePicture
-    }
     try:
-        resp = db.query(f'INSERT INTO User (`username`, `email`, `password`, `profilePicture`) VALUES("{username}","{email}","{password}","{profilePicture}")')
-        print(resp)
-        return user
-    except:
+        resp = db.query(f'INSERT INTO User (username, email, password, profilePicture) VALUES("{username}","{email}","{password}","{profilePicture}")')
+        return findUser(username)
+    except Exception as e:
+        print(e)
         return []
 
 
-def findUser(email):
+def findUser(username):
     try:
-        resp = db.query(f"SELECT * FROM User WHERE email = '{email}'")[0] # since unique
+        resp = db.query(f"SELECT * FROM User WHERE username = '{username}'")[0] # since unique
         user = {
+            'id': resp[0],
             'username': resp[1],
             'email': resp[2],
             'password': resp[3],
             'profilePicture': resp[4]
         }
         return user;
-    except:
+    except Exception as e:
+        print(e)
         return []
     
 
@@ -33,9 +29,10 @@ def findUser(email):
 def validatePassword(username, inputPassword):
     try:
         resp = db.query(f"SELECT COUNT(username) FROM User WHERE (username = '{username}' AND password = '{inputPassword}')")
-    except:
-        return False
-    return (resp[0][0] > 0)
+    except Exception as e:
+        print(e)
+        return []
+    return findUser(username)
 
 
 def updatePassword(username, inputPassword, newPassword):
@@ -43,5 +40,6 @@ def updatePassword(username, inputPassword, newPassword):
         if(validatePassword(username, inputPassword)):
             resp = db.query(f"UPDATE User SET password = '{newPassword}' WHERE username = '{username}'")
         return result[0]
-    except:
+    except Exception as e:
+        print(e)
         return []

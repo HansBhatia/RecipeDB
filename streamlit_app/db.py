@@ -1,12 +1,14 @@
 import mysql.connector
+import streamlit as st
 
+# Uses st.experimental_singleton to only run once.
+@st.experimental_singleton
+def init_connection():
+    return mysql.connector.connect(**st.secrets["db_credentials"])
+cnx = init_connection()
+
+@st.experimental_memo(ttl=600)
 def query(q: str):
-    cnx = mysql.connector.connect(
-        user='recipeApp',
-        password='cS348!project',
-        host='165.232.138.171',
-        database='main'
-    )
     cursor = cnx.cursor()
     try:
         cursor.execute(q)
@@ -17,5 +19,4 @@ def query(q: str):
 
     response = cursor.fetchall()
     cursor.close()
-    cnx.close()
     return response

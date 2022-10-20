@@ -12,7 +12,7 @@ menu_icon="cast", default_index=0, orientation="horizontal")
 # check logged in
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
-    st.session_state['user'] = {}
+    st.session_state['user_obj'] = {}
 
 if not(st.session_state['logged_in']):
     st.info('Please login to rate the recipes!', icon="ℹ️")
@@ -65,6 +65,7 @@ elif selected2 == "Login/SignUp":
         st.write('You are Logged In!')
         if st.button('Logout'):
             st.session_state['logged_in'] = False
+            st.session_state['user_obj'] = {}
             st.experimental_rerun()
     else:
         LoginSignUpT = st.radio("Type", ('Login', 'SignUp'))      
@@ -75,8 +76,10 @@ elif selected2 == "Login/SignUp":
                 submitted = st.form_submit_button("Sign In")
             if submitted:
                 # verify
-                if auth_lib.validatePassword(username, password):
+                user_obj = auth_lib.validatePassword(username, password)
+                if user_obj:
                     st.session_state['logged_in'] = True
+                    st.session_state['user_obj'] = user_obj
                     st.success('Done!')
                     st.experimental_rerun()
                 else:
@@ -84,6 +87,7 @@ elif selected2 == "Login/SignUp":
         elif LoginSignUpT == 'SignUp':
             with st.form("detail_form"):
                 username = st.text_input('Username')
+                email = st.text_input('email')
                 password = st.text_input("Password", type="password", key="password")
                 password2 = st.text_input("Re-enter Password", type="password", key="password2")
                 submitted = st.form_submit_button("Sign Up")
@@ -93,16 +97,22 @@ elif selected2 == "Login/SignUp":
                     st.error('Passwords do not match!')
                 else:
                     # TODO fix the signup insert issue
-                    u_obj = auth_lib.createUser(username, 'test@gmail.com', password, 'test.url')
+                    u_obj = auth_lib.createUser(username, email, password, 'test.url')
                     print(u_obj)
                     if u_obj != []:
                         st.success('Done')
                         LoginSignUpT = 'Login'
                         st.experimental_rerun()
                     else:
-                        st.error('Error invalid username/password')
+                        st.error('Error In Account Creation')
 elif selected2 == "Popular Recipes":
-    count = 5
-    resp = db.query(get_top_n_recipes.format(5))
+    count = st.slider('Browse the top recipes:', 1, 100, 5)
+    
+    query_string = get_top_n_recipes.format(count)
+    second_query_string = get_unrated_recipes
+    tresp = db.query(query_string)
+    remaining = count - len(tresp)
+    tresp2 = db.query(second_query_string.format(remaining))
+    resp = tresp + tresp2
     ###PRINT POSTS### MIGHT BE UNORDERED TODO
     rec_table_to_posts(resp, add_index=True)

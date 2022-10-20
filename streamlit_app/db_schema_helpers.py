@@ -26,7 +26,7 @@ def rec_table_to_posts(resp, add_index=False):
                 # col_name: calories
                 st.text(f'Calories: {item[3]} calories')
                 # col_name: cuisine
-                st.text(f'Cuisine: {item[2].capitalize()}')
+                st.text(f'Cuisine: {item[2].title()}')
                 # col_name: rating
                 check_rating = recipe_id_to_rating.format(item[0])
                 res = db.query(check_rating)
@@ -36,11 +36,12 @@ def rec_table_to_posts(resp, add_index=False):
                     st.text(f'Rating: {res[0][0]}')
                 if user_signed_in:
                     with st.form('Rate' + str(c)):
-                        number = st.number_input('Rate 1-5', min_value=1, max_value=5)
+                        number = st.number_input('Rate 1-5', min_value=1, max_value=5, value=5)
                         submitted = st.form_submit_button("Rate")
                         if submitted:
                             # TODO fix the rating insert issue
-                            query_string = user_add_rating.format(4, item[0], number, number)
-                            db.query(query_string)
+                            query_string = user_add_rating.format(st.session_state['user_obj']['id'], item[0], number, number)
                             print(query_string)
+                            db.query(query_string)
                             st.write("Thanks for your rating!")
+                            st.experimental_rerun()
