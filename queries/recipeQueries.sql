@@ -1,6 +1,11 @@
 -- Query for all recipe information
 SELECT * FROM Recipe WHERE recipeId = <RECIPE_ID>;
 
+
+-- Given recipe name return all details of recipe
+SELECT * from Recipe, <OTHER> as query WHERE name = <Recipe_name>;
+
+
 -- Query for all recipes with particular ingredient (searching by food name)
 SELECT recipeId
 FROM Ingredients
