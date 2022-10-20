@@ -1,6 +1,6 @@
 import mysql.connector
 
-def query():
+def query(q: str):
     cnx = mysql.connector.connect(
         user='recipeApp',
         password='cS348!project',
@@ -9,8 +9,8 @@ def query():
     )
     cursor = cnx.cursor()
     try:
-        #cursor.execute(q)
-        cursor.execute('SELECT * from DietRestrictions;')
+        cursor.execute(q)
+        #cursor.execute('SELECT * from DietRestrictions;')
     except:
         return []
 

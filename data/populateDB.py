@@ -5,9 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# lmao .env didn't work xd
 mydb = mysql.connector.connect(
-    host =      os.getenv('DB_HOSTNAME'),
-    user =      os.getenv('DB_USER'),
+    host = os.getenv('DB_HOSTNAME'),
+    user = os.getenv('DB_USER'),
     password =  os.getenv('DB_PASSWORD'),
     database =  os.getenv('DB_NAME')
 )

@@ -3,16 +3,24 @@ from streamlit_option_menu import option_menu
 import db
 from queries import *
 from PIL import Image
+import random
 
 # horizontal Menu
-selected2 = option_menu(None, ["Search", "Home", "About"],
-icons=['search', 'house', 'cloud-upload'],
+selected2 = option_menu(None, ["Search", "Home", "About", "Login"],
+icons=['search', 'house', 'cloud-upload', 'user'],
 menu_icon="cast", default_index=0, orientation="horizontal")
 
 if selected2 == "Home":
     st.write('you are at Home')
 elif selected2 == "About":
-    st.write('you are at About')
+    st.markdown('''
+                ***This is a Recipe Database***
+-   Takes Inputted leftover ingredients and Returns a list of Recipes available
+-   Common recipe's searchable based on features.
+-   Have features including "Preparation Time", "Rating", "Diet Preferance", "Cuisine", "Common meals", "Time of day" readily available to filter on.
+-   Recipe creation, updation and deletion on user
+-   Personalised accounts with user login.
+                ''')
 elif selected2 == "Search":
     with st.form("search_form"):
         query = st.text_input('Search')
@@ -28,7 +36,7 @@ elif selected2 == "Search":
             # construct query
             query_string = ''
             for item in search_items:
-                sub_q = food_to_recipe_id.format(item)
+                sub_q = food_to_recipe_id.format(f"'{item}'")
                 if query_string != '':
                     query_string += ' INTERSECT ' + sub_q
                 else:
@@ -41,7 +49,7 @@ elif selected2 == "Search":
             # construct query
             query_string = ''
             for item in search_items:
-                sub_q = recipe_to_recipe_id.format(item)
+                sub_q = recipe_to_recipe_id.format(f"'{item}'")
                 if query_string != '':
                     query_string += ' UNION ' + sub_q
                 else:
@@ -49,11 +57,13 @@ elif selected2 == "Search":
             # get recipe objects
             query_string = recipe_from_id.format(f'({query_string})')
             resp = db.query(query_string)
+        print(query_string)
         ###PRINT POSTS###
         for item in resp:
             col1, col2 = st.columns([2, 2])
             with col1:
                 # col_name: image
+                # change this later.. need to fetch the file first
                 image = Image.open('coconut.jpeg')
                 new_image = image.resize((600, 400))
                 st.image(new_image)
@@ -62,22 +72,19 @@ elif selected2 == "Search":
                 # col_name: name
                 st.text(item[1])
                 # col_name: time
-                st.text(f'Prep Time: {0} seconds')
+                st.text(f'Prep Time: {item[4]} minutes')
                 # col_name: calories
-                st.text(f'Calories: {0} calories')
+                st.text(f'Calories: {item[3]} calories')
                 # col_name: cuisine
-                st.text(f'Cuisine: {0}')
+                st.text(f'Cuisine: {item[2].capitalize()}')
                 # col_name: rating
-                st.text(f'Rating: {0}')
-            # response will return recipes
-    #         print(query_string)
-    #         recipeId int NOT NULL AUTO_INCREMENT,
-    # name varchar(255) NOT NULL,
-    # cuisine varchar(30) NOT NULL,
-    # calories int NOT NULL,
-    # time int NOT NULL,
-    # instructions varchar(2000) NOT NULL, -- May need to increase size
-    # image varchar(2500) NOT NULL,
-    # PRIMARY KEY(recipeId),
-    # CONSTRAINT UC_recipe_name UNIQUE(name)
+                st.text(f'Rating: {random.randint(65, 100)}')
+elif selected2 == "Login":
+    with st.form("search_form"):
+        username = st.text_input('Username')
+        password = st.text_input("Password", type="password", key="password")
+        submitted = st.form_submit_button("Sign In")
+    if submitted:
+        # verify
+        st.success('Done!')
             
