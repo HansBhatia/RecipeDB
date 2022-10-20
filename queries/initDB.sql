@@ -20,7 +20,8 @@ CREATE TABLE User(
     password varchar(255) NOT NULL,
     profilePicture varchar(2500),
     PRIMARY KEY(userId),
-    CONSTRAINT UC_user_email UNIQUE(email)
+    CONSTRAINT UC_user_email UNIQUE(email),
+    CONSTRAINT UC_user_username UNIQUE(username)
 );
 
 CREATE TABLE FavoriteRecipes(
