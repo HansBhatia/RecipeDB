@@ -2,3 +2,4 @@ mysql-connector-python
 streamlit
 streamlit-option-menu
 PIL
+python-dotenv
