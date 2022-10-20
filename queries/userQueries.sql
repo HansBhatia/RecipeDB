@@ -1,6 +1,9 @@
 -- Query for all user information
 SELECT * FROM User WHERE userId = <USER_ID>;
 
+-- Adding username as constraint
+ALTER TABLE User 
+ADD CONSTRAINT UC_User_username UNIQUE(username), primary key (username)
 -- Query for adding a new user
 INSERT INTO User (userId, username, email)
 VALUES (<USER_ID>, <USERNAME>, <EMAIL>);
@@ -27,4 +30,3 @@ WHERE userId = <USER_ID> AND recipeId = <RECIPE_ID>;
 INSERT INTO Rating (userId, recipeId, value)
 VALUES (<USER_ID>, <RECIPE_ID>, <RATING_VALUE>)
 ON DUPLICATE KEY UPDATE value = <RATING_VALUE>;
-
