@@ -56,7 +56,7 @@ CREATE TABLE Ingredients(
     recipeId int NOT NULL,
     foodId varchar(255) NOT NULL,
     measure varchar(25) NOT NULL,
-    quantity int NOT NULL,
+    quantity DECIMAL(5, 2) NOT NULL,
     PRIMARY KEY(recipeId, foodId),
     CONSTRAINT FK_ingred_recipeId FOREIGN KEY(recipeId) REFERENCES Recipe(recipeId),
     CONSTRAINT FK_ingred_foodId FOREIGN KEY(foodId) REFERENCES Food(foodId)
