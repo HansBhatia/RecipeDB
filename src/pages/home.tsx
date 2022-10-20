@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { NextPage } from "next/types";
 import { useState } from "react";
 import { RiMoonFill, RiSunLine } from "react-icons/ri";
+import excuteQuery from "../lib/db.js"
 
 type Post = {
   id: string;
@@ -10,7 +11,7 @@ type Post = {
   content: string;
 };
 
-const HomePage: NextPage = () => {
+export default function HomePage() {
   const router = useRouter();
   const posts: Post[] = [
     {
@@ -31,7 +32,8 @@ const HomePage: NextPage = () => {
   //        .then((result) => result.json())
   //        .then(setPosts);
   //    }, []);
-  if (!posts) return <p>Loading...</p>;
+  if (!posts)
+    return <p>Loading...</p>;
 
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -40,31 +42,40 @@ const HomePage: NextPage = () => {
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  // const queryDB = async () => {
+  //   try {
+  //     const result = await excuteQuery({
+  //       query: 'SELECT * FROM users WHERE email = ?',
+  //       values: [],
+  //     });
+  //     console.log(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(value);
+    await fetch('api/mysql', { method: "GET" });
     router.push(`recipe/${value}`);
     // Do work on this string
     //location.assign("http://www.mozilla.org");
   };
+
   return (
     <>
       <IconButton
         aria-label="theme toggle"
         icon={colorMode === "light" ? <RiMoonFill /> : <RiSunLine />}
-        onClick={toggleColorMode}
-      />
+        onClick={toggleColorMode} />
       <form onSubmit={handleSubmit}>
         <Input
           placeholder={"Search"}
           onChange={handleChange}
           onSubmit={handleSubmit}
-          required
-        />
+          required />
         <Button type="submit">Search</Button>
       </form>
     </>
   );
-};
-
-export default HomePage;
+}
