@@ -1,5 +1,8 @@
 import db
 
+
+# When a user creates an account, collecting their data and inserting it into the User database
+
 def createUser(username, email, password, profilePicture):
     try:
         resp = db.query(f'INSERT INTO User (username, email, password, profilePicture) VALUES("{username}","{email}","{password}","{profilePicture}")', insert=True)
@@ -8,6 +11,9 @@ def createUser(username, email, password, profilePicture):
         print(e)
         return []
 
+
+#Passing a username and finding the user in the User table, and returns the user if the username exists in the table
+# Used to ensure a user attempting to login is an exisitng user
 
 def findUser(username):
     try:
@@ -25,6 +31,8 @@ def findUser(username):
         return []
     
 
+# If the username has been found a user attempting to login must enter the password, the inputed password is then checked against the password
+# saved in the User table to ensure the user has entered the correct password
 
 def validatePassword(username, inputPassword):
     try:
@@ -34,6 +42,10 @@ def validatePassword(username, inputPassword):
         return []
     return findUser(username)
 
+
+
+# If a user wants to update their password, they must first validate their password (enter their current password), then enter a new 
+# password and the User table is updated  to have the updated password for the user
 
 def updatePassword(username, inputPassword, newPassword):
     try:
