@@ -5,4 +5,4 @@ WHERE recipeId IN (
                     FROM Ingredients 
                     WHERE foodId = (SELECT foodId 
                                     FROM Food 
-                                    WHERE name = {}))
+                                    WHERE name = {'chicken'}))
