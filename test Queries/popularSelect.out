@@ -1,0 +1,64 @@
+
+  name : "Chicken Stew"
+  recipieId = 5
+  cuisine: "french"
+  calories: 1647
+  time: 70.0
+  instructions: "https://food52.com/recipes/83097-chicken-stew"
+  image": "https://edamam-product-images.s3.amazonaws.com/web-img/74b/74bfb16655500083c4af92bcf45889f7.jpg?X-Amz-Security-
+  Token=IQoJb3JpZ2luX2VjEH8aCXVzLWVhc3QtMSJIMEYCIQDx02oYM7JRX4p97XWuuilX1gpYtzxWgmc61YQnr04JgQIhALL%2BAeij%2B1%2BWyARVwoPyR
+  BE4SyfEvSMF%2FBBCslKrOXLCKswECFgQABoMMTg3MDE3MTUwOTg2IgwFjieJRdVP6cFBfH8qqQT683UvITihW1VUEPZ9DBuo%2Fw13DONgq0wUgO%2FPZuPK
+  ka73nCX7SmLZRrsyjBog4pogUo6Mh3qPZKBfapIbNFmwPsbjoVDdvz%2FqjACq%2BdF4gOG1C8iafywP1Mn1iGG9r1hKfdG%2Bj7qIPC89GHddpWIkDeCcDH4
+  KPglb9b8ov0L4txCe5PG6DphU9QoZ5Qy5NCJQiq%2FrYegkqtkON50rVkO9IHjZp%2FsnPjVnhvPsjdn1KG442KwJGesaN%2B7mEM56z%2FAYOuH7jsv0o6Ui
+  US%2BWoaaDit3NiKcyKmmmqqQm52duC17Wbalbr%2BJGTBwmjSCnkKT%2BlfXt7HO%2BBUSGekzWy0NEfQPw%2BbmuNyu%2FRomSeR%2F8cvc%2FR%2BdQ%2B
+  ipkcFglNbZlgt8eLZdnfodXH0kDcjDiFDqZfUqDwXBVymCFF7TIvnm%2BYToXrOZiq5sAJyZtkCxwkg5%2BjSimuf4lAztXA6xJnmrOv49TUeL3wgym8pOF9Y
+  K%2BynCPqLykGhbzFaf5%2FpwiHfCDSIbeBn3OxhQRjzVWkcLEm4%2BeGy4h3y4W45rdIPoZOodyjisQ6JPhXUrOMp95evFteGNRQNfrSOmACgzaPUeOY5zDH
+  %2FGMaGCDuh%2BgL9nhz8Y7zXlBiIWx6zDnlNOm%2FZOLoht3U2OanvUjKk%2BVao2DTGMGXHJSc1RmuqcmtUAVejT536UI9KUvR7NrvQmSMJ4YbZ7R71mDr%
+  2FynUKbwYCGjObU8fpVp8Q14MPXiw5oGOqgBRaqv8BpTWh0LN0HFEL6MNaqnVMp7Vy0FcQ6JcFvm2nfMQv%2FroiRYaQWthkWWZXAAa8ae%2Byar4MMVRukDk
+  yuhkYJhGikyI6yg55TeLd%2F0wKvItxkcOQKAo52lXCvMrziEjHDfmgKAsMUXC1YnDNquXTQIex5cqzYHfJxv8ZJX7MdFdDQlPEZnRUAjtvwda2ZfYQCVjrI2
+  TQycu0GgX00fs8thUgLWbz2R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221020T082242Z&X-Amz-SignedHeaders=host&X-Amz-Expi
+  res=3600&X-Amz-Credential=ASIASXCYXIIFGNF7JHV6%2F20221020%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d813a7d85f43f61
+  746b3ae0567781aa8d10c39039d319917a5c86e1fe02c20e7"
+
+
+
+  name : "Baked Chicken"
+  recipieId = 3
+  cuisine: "american"
+  calories: 901
+  time: 0.0
+  instructions: "http://www.marthastewart.com/318981/baked-chicken"
+  image": "https://edamam-product-images.s3.amazonaws.com/web-img/01c/01cacb70890274fb7b7cebb975a93231.jpg
+            ?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEH8aCXVzLWVhc3QtMSJIMEYCIQDx02oYM7JRX4p97XWuuilX1gpYtzxWgm
+            c61YQnr04JgQIhALL%2BAeij%2B1%2BWyARVwoPyRBE4SyfEvSMF%2FBBCslKrOXLCKswECFgQABoMMTg3MDE3MTUwOTg2IgwFjieJRdVP6cF
+            BfH8qqQT683UvITihW1VUEPZ9DBuo%2Fw13DONgq0wUgO%2FPZuPKka73nCX7SmLZRrsyjBog4pogUo6Mh3qPZKBfapIbNFmwPsbjoVDdvz%2FqjACq
+            %2BdF4gOG1C8iafywP1Mn1iGG9r1hKfdG%2Bj7qIPC89GHddpWIkDeCcDH4KPglb9b8ov0L4txCe5PG6DphU9QoZ5Qy5NCJQiq%2FrYegkqtkON50rVkO9IHjZp
+            %2FsnPjVnhvPsjdn1KG442KwJGesaN%2B7mEM56z%2FAYOuH7jsv0o6UiUS%2BWoaaDit3NiKcyKmmmqqQm52duC17Wbalbr%2BJGTBwmjSCnkKT%2BlfXt7HO%
+            2BBUSGekzWy0NEfQPw%2BbmuNyu%2FRomSeR%2F8cvc%2FR%2BdQ%2BipkcFglNbZlgt8eLZdnfodXH0kDcjDiFDqZfUqDwXBVymCFF7TIvnm%2BYToXrOZiq5sA
+            JyZtkCxwkg5%2BjSimuf4lAztXA6xJnmrOv49TUeL3wgym8pOF9YK%2BynCPqLykGhbzFaf5%2FpwiHfCDSIbeBn3OxhQRjzVWkcLEm4%2BeGy4h3y4W45rdIPoZOo
+            dyjisQ6JPhXUrOMp95evFteGNRQNfrSOmACgzaPUeOY5zDH%2FGMaGCDuh%2BgL9nhz8Y7zXlBiIWx6zDnlNOm%2FZOLoht3U2OanvUjKk%2BVao2DTGMGXHJSc1Rm
+            uqcmtUAVejT536UI9KUvR7NrvQmSMJ4YbZ7R71mDr%2FynUKbwYCGjObU8fpVp8Q14MPXiw5oGOqgBRaqv8BpTWh0LN0HFEL6MNaqnVMp7Vy0FcQ6JcFvm2nfMQv%2FroiR
+            YaQWthkWWZXAAa8ae%2Byar4MMVRukDkyuhkYJhGikyI6yg55TeLd%2F0wKvItxkcOQKAo52lXCvMrziEjHDfmgKAsMUXC1YnDNquXTQIex5cqzYHfJxv8ZJX7MdFdDQlPEZnR
+            UAjtvwda2ZfYQCVjrI2TQycu0GgX00fs8thUgLWbz2R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221020T082242Z&X-Amz-SignedHeaders=host&X-Amz-
+            Expires=3600&X-Amz-Credential=ASIASXCYXIIFGNF7JHV6%2F20221020%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9961eb6c0665e2b23b2330eb671b8
+            5cbdc232a4fb436a46916c06d009000b502"
+
+
+ name : "Catalan Chicken"
+  recipieId = 4
+  cuisine: "french"
+  calories: 3900
+  time: 0.0
+  instructions: "http://www.bonappetit.com/columns/breadwinner/article/how-to-get-your-kids-to-eat-sauce-let-them-cook-it-themselves"
+  image": "https://edamam-product-images.s3.amazonaws.com/web-img/4d9/4d9084cbc170789caa9e997108b595de.jpg?X-Amz-Security-Token=IQoJb3
+    JpZ2luX2VjEH8aCXVzLWVhc3QtMSJIMEYCIQDx02oYM7JRX4p97XWuuilX1gpYtzxWgmc61YQnr04JgQIhALL%2BAeij%2B1%2BWyARVwoPyRBE4SyfEvSMF%2FBBCslKrOXL
+    CKswECFgQABoMMTg3MDE3MTUwOTg2IgwFjieJRdVP6cFBfH8qqQT683UvITihW1VUEPZ9DBuo%2Fw13DONgq0wUgO%2FPZuPKka73nCX7SmLZRrsyjBog4pogUo6Mh3qPZKBf
+    apIbNFmwPsbjoVDdvz%2FqjACq%2BdF4gOG1C8iafywP1Mn1iGG9r1hKfdG%2Bj7qIPC89GHddpWIkDeCcDH4KPglb9b8ov0L4txCe5PG6DphU9QoZ5Qy5NCJQiq%2FrYegkq
+    tkON50rVkO9IHjZp%2FsnPjVnhvPsjdn1KG442KwJGesaN%2B7mEM56z%2FAYOuH7jsv0o6UiUS%2BWoaaDit3NiKcyKmmmqqQm52duC17Wbalbr%2BJGTBwmjSCnkKT%2Blf
+    Xt7HO%2BBUSGekzWy0NEfQPw%2BbmuNyu%2FRomSeR%2F8cvc%2FR%2BdQ%2BipkcFglNbZlgt8eLZdnfodXH0kDcjDiFDqZfUqDwXBVymCFF7TIvnm%2BYToXrOZiq5sAJyZt
+    kCxwkg5%2BjSimuf4lAztXA6xJnmrOv49TUeL3wgym8pOF9YK%2BynCPqLykGhbzFaf5%2FpwiHfCDSIbeBn3OxhQRjzVWkcLEm4%2BeGy4h3y4W45rdIPoZOodyjisQ6JPhXU
+    rOMp95evFteGNRQNfrSOmACgzaPUeOY5zDH%2FGMaGCDuh%2BgL9nhz8Y7zXlBiIWx6zDnlNOm%2FZOLoht3U2OanvUjKk%2BVao2DTGMGXHJSc1RmuqcmtUAVejT536UI9KUv
+    R7NrvQmSMJ4YbZ7R71mDr%2FynUKbwYCGjObU8fpVp8Q14MPXiw5oGOqgBRaqv8BpTWh0LN0HFEL6MNaqnVMp7Vy0FcQ6JcFvm2nfMQv%2FroiRYaQWthkWWZXAAa8ae%2Byar4M
+    MVRukDkyuhkYJhGikyI6yg55TeLd%2F0wKvItxkcOQKAo52lXCvMrziEjHDfmgKAsMUXC1YnDNquXTQIex5cqzYHfJxv8ZJX7MdFdDQlPEZnRUAjtvwda2ZfYQCVjrI2TQycu0G
+    gX00fs8thUgLWbz2R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221020T082242Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credenti
+    al=ASIASXCYXIIFGNF7JHV6%2F20221020%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ff157f8df4ac240129083f49772dd404e0450836ddd6e01792d5032dcc1f3585"
