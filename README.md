@@ -13,6 +13,6 @@ Recipe Database
 From the repository directory run these commands on the terminal.   
 `cd streamlit_app
  pip install -r requirements.txt`
-  - add env file (that was sent by email) to streamlit_app dir  (current directory) (make sure it has file name: .env)
   - once done simply run the command on the terminal.
 `streamlit run main.py`
+Access the url [link]http://localhost:8501 or the url that was given after the streamlit run command. (The app is now deployed)
