@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# lmao .env didn't work xd
 mydb = mysql.connector.connect(
   user = "recipeApp",
   password = "cS348!project",
