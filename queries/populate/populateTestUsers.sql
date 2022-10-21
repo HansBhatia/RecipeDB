@@ -6,15 +6,12 @@ INSERT INTO User (username, email, password) VALUES ("User4", "user4@fakeemail.c
 INSERT INTO User (username, email, password) VALUES ("User5", "user5@fakeemail.com", "User5");
 
 -- Adding User Ratings
-INSERT INTO Rating (userId, recipeId, value) VALUES (1, 1, 1);
-INSERT INTO Rating (userId, recipeId, value) VALUES (1, 2, 2);
 INSERT INTO Rating (userId, recipeId, value) VALUES (1, 3, 3);
 INSERT INTO Rating (userId, recipeId, value) VALUES (1, 4, 4);
 INSERT INTO Rating (userId, recipeId, value) VALUES (1, 5, 5);
-INSERT INTO Rating (userId, recipeId, value) VALUES (2, 3, 3);
-INSERT INTO Rating (userId, recipeId, value) VALUES (2, 4, 5);
+INSERT INTO Rating (userId, recipeId, value) VALUES (2, 3, 5);
 INSERT INTO Rating (userId, recipeId, value) VALUES (2, 5, 5);
-INSERT INTO Rating (userId, recipeId, value) VALUES (3, 3, 3);
+INSERT INTO Rating (userId, recipeId, value) VALUES (3, 5, 3);
 
 -- Adding User Favorites
 INSERT INTO FavoriteRecipes (userId, recipeId) VALUES (1, 4);
