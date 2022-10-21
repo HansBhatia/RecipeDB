@@ -15,4 +15,4 @@ From the repository directory run these commands on the terminal.
  pip install -r requirements.txt`
   - once done simply run the command on the terminal.
 `streamlit run main.py`
-Access the url [link]http://localhost:8501 or the url that was given after the streamlit run command. (The app is now deployed)
+Access the url http://localhost:8501 or the url that was given after the streamlit run command. (The app is now deployed)
