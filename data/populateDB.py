@@ -7,11 +7,11 @@ load_dotenv()
 
 # lmao .env didn't work xd
 mydb = mysql.connector.connect(
-    host = os.getenv('DB_HOSTNAME'),
-    user = os.getenv('DB_USER'),
-    password =  os.getenv('DB_PASSWORD'),
-    database =  os.getenv('DB_NAME')
-)
+  user = "recipeApp",
+  password = "cS348!project",
+  host = "165.232.138.171",
+  database = "main")
+
 mycursor = mydb.cursor(buffered = True)
 
 def populateDBFromJSON(filename):

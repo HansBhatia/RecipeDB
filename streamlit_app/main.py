@@ -28,7 +28,7 @@ elif selected2 == "Search":
         genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
         submitted = st.form_submit_button("Go")
     if submitted:
-        st.write(f'you searched for {query}')
+        #st.write(f'you searched for {query}')
         search_items = list(map(lambda x: x.strip(), query.split(',')))
         query_string = ''
         resp = []
@@ -36,28 +36,30 @@ elif selected2 == "Search":
             # search by ingredient
             # construct query
             query_string = ''
-            for item in search_items:
-                sub_q = food_to_recipe_id.format(f"'{item}'")
-                if query_string != '':
-                    query_string += ' INTERSECT ' + sub_q
-                else:
-                    query_string = sub_q
-            # get recipe objects
-            query_string = recipe_from_id.format(f'({query_string})')
-            resp = db.query(query_string)
+            res_list = []
+            if search_items[0] == '':
+                st.error('You must search for something!')
+            else:
+                for item in search_items:
+                    sub_q = food_to_recipe_id.format(f"'{item}'")
+                    query_string = recipe_from_id.format(f'({sub_q})')
+                    resp = db.query(query_string)
+                    if len(res_list):
+                        res_list = list(set(res_list) & set(resp))
+                    else:
+                        res_list = db.query(query_string)
         else:
             # search by ingredient
             # construct query
-            query_string = ''
-            for item in search_items:
-                sub_q = recipe_to_recipe_id.format(f"'{item}'")
-                if query_string != '':
-                    query_string += ' UNION ' + sub_q
-                else:
-                    query_string = sub_q
-            # get recipe objects
-            query_string = recipe_from_id.format(f'({query_string})')
-            resp = db.query(query_string)
+            if search_items[0] == '':
+                st.error('You must search for something!')
+            elif len(search_items) > 1:
+                st.error('Multiple recipe searches: This feature is not supported.')
+            else:
+                query_string = recipe_to_recipe_id.format(f"'{search_items[0]}'")
+                # get recipe objects
+                query_string = recipe_from_id.format(f'({query_string})')
+                resp = db.query(query_string)
         ###PRINT POSTS###
         rec_table_to_posts(resp)
 elif selected2 == "Login/SignUp":

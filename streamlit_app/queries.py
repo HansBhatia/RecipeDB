@@ -5,4 +5,3 @@ get_top_n_recipes = "SELECT * FROM Recipe as r, NumRatings as nr WHERE r.recipeI
 get_unrated_recipes = "SELECT * FROM Recipe as r WHERE r.recipeId NOT IN(SELECT recipeId FROM Rating) ORDER BY r.name LIMIT {}"
 user_add_rating ="INSERT INTO Rating (userId, recipeId, value) VALUES ({}, {}, {}) ON DUPLICATE KEY UPDATE value = {};"
 recipe_id_to_rating ="SELECT nr FROM NumRatings WHERE recipeId = {};"
-#NumRatings
