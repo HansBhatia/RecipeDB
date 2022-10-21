@@ -1,3 +1,4 @@
+# THESE ARE THE QUERY FORMAT STRINGS WE USE
 food_to_recipe_id = "SELECT recipeId FROM Ingredients WHERE foodId = (SELECT foodId FROM Food WHERE name = {})"
 recipe_to_recipe_id = "SELECT * from Recipe WHERE name = {}"
 recipe_from_id = "SELECT * from Recipe as r, {} as query WHERE r.recipeId = query.recipeId"

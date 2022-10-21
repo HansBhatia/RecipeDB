@@ -5,6 +5,7 @@ from queries import *
 import auth_lib
 from db_schema_helpers import *
 # horizontal Menu
+# selected2 is the page the user goes to
 selected2 = option_menu(None, ["Search", "Popular Recipes", "About", "Login/SignUp"],
 icons=['search', 'star', 'cloud-upload', 'user'],
 menu_icon="cast", default_index=0, orientation="horizontal")
@@ -77,7 +78,6 @@ elif selected2 == "Login/SignUp":
                 password = st.text_input("Password", type="password", key="password")
                 submitted = st.form_submit_button("Sign In")
             if submitted:
-                # verify
                 user_obj = auth_lib.validatePassword(username, password)
                 if user_obj:
                     st.session_state['logged_in'] = True
@@ -98,13 +98,13 @@ elif selected2 == "Login/SignUp":
                 if password != password2:
                     st.error('Passwords do not match!')
                 else:
-                    # TODO fix the signup insert issue
                     u_obj = auth_lib.createUser(username, email, password, 'test.url')
                     print(u_obj)
                     if u_obj != []:
-                        st.success('Done')
+                        print('hi')
+                        st.success('Done, You may login now.')
                         LoginSignUpT = 'Login'
-                        st.experimental_rerun()
+                        #st.experimental_rerun()
                     else:
                         st.error('Error In Account Creation')
 elif selected2 == "Popular Recipes":
@@ -116,5 +116,5 @@ elif selected2 == "Popular Recipes":
     remaining = count - len(tresp)
     tresp2 = db.query(second_query_string.format(remaining))
     resp = tresp + tresp2
-    ###PRINT POSTS### MIGHT BE UNORDERED TODO
+    ###PRINT POSTS### MIGHT BE UNORDERED
     rec_table_to_posts(resp, add_index=True)

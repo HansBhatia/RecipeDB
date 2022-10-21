@@ -3,17 +3,16 @@ import streamlit as st
 
 # Uses st.experimental_singleton to only run once.
 @st.experimental_singleton
-def init_connection():
+def init_connection(): # start a websocket to the database server
    return mysql.connector.connect(user = "recipeApp", password = "cS348!project", host = "165.232.138.171", database = "main")
    #return mysql.connector.connect(**st.secrets["db_credentials"])
 cnx = init_connection()
 
 @st.experimental_memo(ttl=600)
-def query(q: str, insert: bool = False):
+def query(q: str, insert: bool = False): # query the database server
     cursor = cnx.cursor()
     try:
         cursor.execute(q)
-        #cursor.execute('SELECT * from DietRestrictions;')
     except Exception as e:
         print(e)
         return []
