@@ -24,7 +24,6 @@ From the features described in the report, the following are implemented:
 * R9: Users are able to view the most popular recipes (they can use a slider to view up to a 100 recipes).
 * R10: Users can create a new account on the website and sign in.
 * R11: Users, after signing in, can indicate which recipes are their favorites and view a list of them in a designated tab.
-* R11: Users, after signing in, can indicate which recipes are their favorites and view a list of them in a designated tab.
 * Users, after signing in, can rate a recipe (this feature only works when signed in).
 
 ## C2
