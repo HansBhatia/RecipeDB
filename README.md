@@ -1,6 +1,6 @@
 # RecipeDB
 Milestone 1 Notes:
-* Please change to use the M1 branch for milestone 1. The main branch may have files not associated with M1.
+* Please change to use the stable_M1 branch for milestone 1. The main branch may have files not associated with M1.
 * In the report, we have indicated that we have results for the test-sample.out file stored in different .out locations. These have all been consolidated to the `/queries/test-sample.out` file.
 
 ## C1
@@ -19,11 +19,13 @@ From the repository directory run these commands on the terminal.
 Access the url http://localhost:8501 or the url that was given after the streamlit run command. (The app is now deployed).
 ### Features currently supported:
 From the features described in the report, the following are implemented:
-* R6: Users are able to enter a list of ingredients and get a list of recipes that use those ingredients.
+* R6: Users are able to enter a list of ingredients and get a list of recipes that use all those ingredients.
 * R7: Users can enter a recipe name and get the details for the specific recipe they requested.
-* R9: Users are able to view the most popular recipes.
+* R9: Users are able to view the most popular recipes (they can use a slider to view up to a 100 recipes).
 * R10: Users can create a new account on the website and sign in.
 * R11: Users, after signing in, can indicate which recipes are their favorites and view a list of them in a designated tab.
+* R11: Users, after signing in, can indicate which recipes are their favorites and view a list of them in a designated tab.
+* Users, after signing in, can rate a recipe (this feature only works when signed in).
 
 ## C2
 Relevant SQL files/scripts are as follows:
