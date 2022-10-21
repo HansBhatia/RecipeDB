@@ -9,3 +9,10 @@ Recipe Database
       readily available to filter on.
   * Recipe creation, updation and deletion on user
   * Personalised accounts with user login.
+## Steps to access the application:
+From the repository directory run these commands on the terminal.   
+`cd streamlit_app
+ pip install -r requirements.txt`
+  - once done simply run the command on the terminal.
+`streamlit run main.py`
+Access the url http://localhost:8501 or the url that was given after the streamlit run command. (The app is now deployed)
