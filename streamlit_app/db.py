@@ -10,7 +10,12 @@ cnx = init_connection()
 
 @st.experimental_memo(ttl=600)
 def query(q: str, insert: bool = False): # query the database server
-    cursor = cnx.cursor()
+    try:
+        cursor = cnx.cursor()
+    except:
+        cnx = init_connection()
+        cursor = cnx.cursor()
+
     try:
         cursor.execute(q)
     except Exception as e:
