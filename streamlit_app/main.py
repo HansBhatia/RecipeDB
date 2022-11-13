@@ -6,6 +6,8 @@ import auth_lib
 from db_schema_helpers import *
 # horizontal Menu
 # selected2 is the page the user goes to
+data_url = 'https://cdn.dribbble.com/users/4567683/screenshots/9244379/media/1879a9614122f80d5cd6d1b315974fa3.gif'
+#st.markdown(f"![Alt Text]({data_url})")
 selected2 = option_menu(None, ["Search", "Popular Recipes", "About", "Login/SignUp"],
 icons=['search', 'star', 'cloud-upload', 'user'],
 menu_icon="cast", default_index=0, orientation="horizontal")
@@ -42,7 +44,7 @@ elif selected2 == "Search":
                 st.error('You must search for something!')
             else:
                 for item in search_items:
-                    sub_q = food_to_recipe_id.format(f"'{item}'")
+                    sub_q = food_to_recipe_id.format(f"{item}")
                     query_string = recipe_from_id.format(f'({sub_q})')
                     resp = db.query(query_string)
                     if len(res_list):
@@ -57,7 +59,7 @@ elif selected2 == "Search":
             elif len(search_items) > 1:
                 st.error('Multiple recipe searches: This feature is not supported.')
             else:
-                query_string = recipe_to_recipe_id.format(f"'{search_items[0]}'")
+                query_string = recipe_to_recipe_id.format(f"{search_items[0]}")
                 # get recipe objects
                 query_string = recipe_from_id.format(f'({query_string})')
                 resp = db.query(query_string)

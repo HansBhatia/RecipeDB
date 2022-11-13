@@ -3,6 +3,8 @@ from PIL import Image
 import random
 import db
 from queries import *
+import requests
+from io import BytesIO
 
 # This function is used to output each of the recipe cards given a db response of a recipe table resp.
 # add_index is a boolean flag if we want to have some sort of order mentioned on the card (eg. most popular recipes in order).
@@ -13,7 +15,10 @@ def rec_table_to_posts(resp, add_index=False):
             with image_container:
                 # col_name: image
                 # change this later.. need to fetch the file first
-                image = Image.open('coconut.jpeg')
+                req = requests.get('https://edamam-product-images.s3.amazonaws.com/web-img/4d9/4d9084cbc170789caa9e997108b595de.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGwaCXVzLWVhc3QtMSJIMEYCIQD89Ju68aFuhrgk%2BH4kkSuMZbBl2vpwu9swq2hPZafnLQIhAJBLSHhxSs9ojFw%2FXkZwii0jcSWmjwowzeTSMJ0hBrfTKswECGQQABoMMTg3MDE3MTUwOTg2IgwGz1sQPrzGhYIiYdIqqQRMZQjSzXBYs4QuwzzRI0KiqGIfPNIT1QG8oUVDnVyQS1Ew%2BA%2F2IgoJWAtx0%2BN9TI%2BiKvTL19BB6Z2EkapLEZCNDagbdGF02rE4dN0czpcZfXc0%2B%2BKJ4C35Bvv154Jgbc7n%2B8tdPkqtrnNI4torKN%2BZVPyNn2mq81vUIz4z%2Ba71n4w%2Bh4%2FF%2FBuI2DpW41bZu7QM1JhRG3jwZpHbs%2Bru8wnsijJWewMtUTiqLeGFKyCZt16DIpsuwsSkYLjmQUc3EvrlkA2UodQyIsbrNWqTnsyjlfQ3Or44D3U%2FOdx18gLd4A2zfWMU9i%2B9NyvVF%2BGm4sH15ZYDBqqaWyHflsBep7iLzMOF%2FdQ4ZQrVCEGNnSoYOuXXLP0Rdk3br5nPt5BA80B%2BIbC4mrTYZ5iMRjoFgaL4lLys4tnLkk5gHFUofmascJqwYsflF%2FRuNh7OaOouUHy1dr5Bo53OQy9t%2B7S88Z9RTzsmzVsF%2BUt0DTvtc7Sz4iNlL6srF3%2FrsX30L3AtWytxpXdD53hacyuYOe2k4eSlycuK4efzBAUDx2AvnQNtEkHVAfHyUJ4%2BcLILtV6Lc7ZFx3B6Md3DAP4aF7RbFNECGK7AxB8bb3J35YI4U8cljOJ%2FuWnnihV0at2nU83NDOWqoRWsQpGNHaeTyFmOWFB2EXrwggV05khayS0XYd38H0gCuA2WptRdxzg58pv2a3Mx5C71EOBAKnFqG1WbS5ku1At4bp7KY%2FQ4MKL5r5sGOqgBQLZw8G4rQyWC56XWxYdMs1p6vcUEDQsSogL5HT2peNsloDmscfA2oIF4MCrRFFs3wviDL9bdsI1vbt1qvAVg3QgYd7Set3hQlQo3BWSzmGvl1GGZ7Y9TiTIVV54r%2F%2B4i5Xaf2YZ1YIQAICNaQojtwBJ%2BEUMix5kpqT9Bdpwf0ouFXg73ipn9jpTt%2FafKWaiucMts68WrVdSiK%2Bq0v2L6E4kbCvMgMHkB&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221109T210457Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=ASIASXCYXIIFP3RPKWZZ%2F20221109%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=a0b247f550a9f74483005df3aeb55a63ad3bc9fc12c3a185839b0d28bc12aff6')
+                print(item[6])
+                image = Image.open(BytesIO(req.content))
+                #image = Image.open('coconut.jpeg')#item[6])
                 new_image = image.resize((600, 400))
                 st.image(new_image)
             with description_container:
