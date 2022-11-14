@@ -1,5 +1,5 @@
 # Data Folder
 
-This folder contains all of the scripts that are used to extract data from the Edamam API, as well as the data itself. The purpose of each file is as follows:
-* `extractAPI.py` provides functions to retrieve relevant recipe information from the Edamam API, given a list of search terms, in JSON format.
-* `populateDB.py` provides functions to populate the database with the retrieved data from Edamam API, given a file path to a correctly formatted JSON file.
+To add additional migration files for new databases, run `addRecipes.py`. Usage: `python addRecipes.py recipeCountPerKeyword recipeKeyword1 [recipeKeyword2 ...]`. Example command is `python addRecipes.py 20 pork noodles`, which creates two JSON and SQL files in `/json/` and `/migrations/recipe`, respectively, containing information about 20 recipes based on pork and noodles.
+
+To run migration files, run `python applyMigrations.py`. Usage: `python applyMigrations [recipeKeyword1 recipeKeyword2 ...]`. Example command is `python applyMigrations pork noodles`, which adds the data that was extracted from the API as migrations from the previous command to the database.
