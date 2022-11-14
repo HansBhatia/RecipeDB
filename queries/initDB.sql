@@ -56,7 +56,7 @@ CREATE TABLE Food(
 CREATE TABLE Ingredients(
     recipeId int NOT NULL,
     foodId varchar(255) NOT NULL,
-    measure varchar(25) NOT NULL,
+    measure varchar(25),
     quantity DECIMAL(5, 2) NOT NULL,
     PRIMARY KEY(recipeId, foodId),
     CONSTRAINT FK_ingred_recipeId FOREIGN KEY(recipeId) REFERENCES Recipe(recipeId),
@@ -83,6 +83,11 @@ CREATE TABLE RecipeRestrictions(
 
 CREATE INDEX IDX_recres_recipeId ON RecipeRestrictions(recipeId);
 CREATE INDEX IDX_recres_restrictionId ON RecipeRestrictions(restrictionId);
+
+-- Tables for managing database migration information
+CREATE TABLE AppliedRecipeMigrations(
+    migrationName VARCHAR(255) NOT NULL PRIMARY KEY
+);
 
 -- Views
 CREATE VIEW AvgRating AS

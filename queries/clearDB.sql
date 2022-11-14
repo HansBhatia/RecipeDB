@@ -20,3 +20,5 @@ DROP TABLE Rating;
 DROP TABLE FavoriteRecipes;
 DROP TABLE User;
 DROP TABLE Recipe;
+
+DROP TABLE AppliedRecipeMigrations;
