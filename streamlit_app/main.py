@@ -29,6 +29,7 @@ elif selected2 == "Search":
     with st.form("search_form"):
         query = st.text_input('Search')
         genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
+        restrictions = st.multiselect("Maanav", "Maanav")
         submitted = st.form_submit_button("Go")
     if submitted:
         #st.write(f'you searched for {query}')
