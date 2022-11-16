@@ -1,10 +1,11 @@
 import db
-
+import bcrypt
 
 # When a user creates an account, collecting their data and inserting it into the User database
 
 def createUser(username, email, password, profilePicture):
     try:
+        password = bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt())
         resp = db.query(f'INSERT INTO User (username, email, password, profilePicture) VALUES("{username}","{email}","{password}","{profilePicture}")', insert=True)
         return findUser(username)
     except Exception as e:
@@ -36,11 +37,16 @@ def findUser(username):
 
 def validatePassword(username, inputPassword):
     try:
-        resp = db.query(f"SELECT COUNT(username) FROM User WHERE (username = '{username}' AND password = '{inputPassword}')")
+        # find hashed password in db
+        resp = db.query(f"SELECT password FROM User WHERE username = '{username}'")[0][0]
+        # if not(resp):
+        #     return []
+        if bcrypt.checkpw(inputPassword.encode('UTF-8'), resp):
+            return findUser(username)
     except Exception as e:
         print(e)
         return []
-    return findUser(username)
+    return []
 
 
 
