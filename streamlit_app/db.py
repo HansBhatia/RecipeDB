@@ -8,7 +8,7 @@ def init_connection(): # start a websocket to the database server
    #return mysql.connector.connect(**st.secrets["db_credentials"])
 cnx = init_connection()
 
-@st.experimental_memo(ttl=600)
+# @st.experimental_memo(ttl=600)
 def query(q: str, insert: bool = False): # query the database server
     try:
         cursor = cnx.cursor()

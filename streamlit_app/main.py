@@ -72,7 +72,9 @@ elif selected2 == "Search":
         rec_table_to_posts(resp)
 elif selected2 == "Login/SignUp":
     if st.session_state['logged_in']:
-        st.write('You are Logged In!')
+        st.write('You are logged in as {}.'.format(
+            (st.session_state['user_obj'])['username']
+        ))
         if st.button('Logout'):
             st.session_state['logged_in'] = False
             st.session_state['user_obj'] = {}
@@ -108,7 +110,6 @@ elif selected2 == "Login/SignUp":
                     u_obj = auth_lib.createUser(username, email, password, 'test.url')
                     print(u_obj)
                     if u_obj != []:
-                        print('hi')
                         st.success('Done, You may login now.')
                         LoginSignUpT = 'Login'
                         #st.experimental_rerun()
