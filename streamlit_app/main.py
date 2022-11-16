@@ -111,7 +111,8 @@ elif selected2 == "Login/SignUp":
 
                     if u_obj != []:
                         st.session_state['logged_in'] = True
-                        st.session_state['user_obj'] = user_obj
+                        st.session_state['user_obj'] = u_obj
+                        print(st.session_state['user_obj'])
                         st.success('Done, You are logged in!')
                         st.experimental_rerun()
                     else:
