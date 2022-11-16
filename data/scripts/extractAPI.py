@@ -1,6 +1,4 @@
 import requests
-import json
-from .connectDB import connectDB
 
 # Max size of a BLOB type in MySQL
 MAX_IMAGE_SIZE = 65535
