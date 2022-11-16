@@ -29,13 +29,17 @@ elif selected2 == "Search":
     with st.form("search_form"):
         query = st.text_input('Search')
         genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
-        restrictions = st.multiselect("Maanav", "Maanav")
+        restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
         submitted = st.form_submit_button("Go")
     if submitted:
         #st.write(f'you searched for {query}')
         search_items = list(map(lambda x: x.strip(), query.split(',')))
         query_string = ''
         resp = []
+        # create restrictions string
+        restriction_filters = ''
+        for r in restrictions:
+            restriction_filters += f" AND D.name = '{r}'";
         if genre == 'By Ingredients':
             # search by ingredient
             # construct query
@@ -47,11 +51,11 @@ elif selected2 == "Search":
                 for item in search_items:
                     sub_q = food_to_recipe_id.format(f"{item}")
                     query_string = recipe_from_id.format(f'({sub_q})')
-                    resp = db.query(query_string)
+                    resp = db.query(query_string + restriction_filters)
                     if len(res_list):
                         res_list = list(set(res_list) & set(resp))
                     else:
-                        res_list = db.query(query_string)
+                        res_list = db.query(query_string + restriction_filters)
         else:
             # search by ingredient
             # construct query
@@ -59,11 +63,11 @@ elif selected2 == "Search":
                 st.error('You must search for something!')
             elif len(search_items) > 1:
                 st.error('Multiple recipe searches: This feature is not supported.')
-            else:
+            else:  
                 query_string = recipe_to_recipe_id.format(f"{search_items[0]}")
                 # get recipe objects
                 query_string = recipe_from_id.format(f'({query_string})')
-                resp = db.query(query_string)
+                resp = db.query(query_string + restriction_filters)
         ###PRINT POSTS###
         rec_table_to_posts(resp)
 elif selected2 == "Login/SignUp":
@@ -78,7 +82,7 @@ elif selected2 == "Login/SignUp":
         if LoginSignUpT == 'Login':
             with st.form("search_form"):
                 username = st.text_input('Username')
-                password = st.text_input("Password", type="password", key="password")
+                password = st.text_input("Password", type="password", key="password", max_chars=71)
                 submitted = st.form_submit_button("Sign In")
             if submitted:
                 user_obj = auth_lib.validatePassword(username, password)

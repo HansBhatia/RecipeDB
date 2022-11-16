@@ -41,6 +41,7 @@ def rec_table_to_posts(resp, add_index=False):
                     st.text('Number of Ratings: Not Rated Yet, be the first!')
                 else:
                     st.text(f'Number of Ratings: {res[0][0]}')
+                st.write(f'Recipe URL: [link]({item[5]})')
                 # IF a user has signed in, provide them functionality to edit ratings.
                 if user_signed_in:
                     with st.form('Rate' + str(c)):
