@@ -1,5 +1,6 @@
 import json
 import sys
+import traceback
 from scripts.extractAPI import searchRecipes
 from scripts.createMigration import createMigrationFromJSON
 
@@ -16,4 +17,5 @@ if __name__ == '__main__':
             
             createMigrationFromJSON(f"{keyword}.json", keyword)
     except ValueError:
+        traceback.print_exc()
         print("Usage: python addRecipes.py recipeCountPerKeyword recipeKeyword1 [recipeKeyword2 ...]")

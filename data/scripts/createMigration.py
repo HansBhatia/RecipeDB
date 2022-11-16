@@ -1,4 +1,5 @@
 import json
+import base64
 
 def createMigrationFromJSON(jsonFile, migrationFileName):
     """Must be checked that migration has not yet been applied."""
@@ -14,13 +15,13 @@ def createMigrationFromJSON(jsonFile, migrationFileName):
         for _, recipes in data.items():
             for recipeName, recipeFields in recipes.items():
                 # Adding new recipe
-                sql = 'INSERT INTO Recipe (name, cuisine, calories, time, instructions, image) VALUES ("{}", "{}", "{}", {}, "{}", "{}");'.format(
+                sql = "INSERT INTO Recipe (name, cuisine, calories, time, instructions, imageName) VALUES ('{}', '{}', '{}', {}, '{}', '{}');".format(
                     recipeName,
                     recipeFields['cuisineType'],
                     recipeFields['calories'],
                     int(recipeFields['totalTime']),
                     recipeFields['url'],
-                    recipeFields['image']
+                    recipeFields['imageName']
                 )
                 f.write(f"{sql}\n")
 

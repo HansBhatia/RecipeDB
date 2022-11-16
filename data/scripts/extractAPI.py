@@ -1,18 +1,25 @@
 import requests
 import json
+from .connectDB import connectDB
+
+# Max size of a BLOB type in MySQL
+MAX_IMAGE_SIZE = 65535
 
 def getAPIrecipes(keyword, count):
     app_id = '73cf0996'
     app_key = '4b789708cddb597453e31879162878ae'
-    result = requests.get(f'https://api.edamam.com/search?q={keyword}&to={count}&app_id={app_id}&app_key={app_key}')
+    result = requests.get(f'https://api.edamam.com/search?q={keyword}&imageSize=SMALL&to={count}&app_id={app_id}&app_key={app_key}')
     data = result.json()
     return data['hits']
 
+def processString(s):
+    """Processes string by escaping single and double quotation marks."""
+    return s.replace("'", "\'\'").replace("\"", "\"\"")
+
 recipeNameField = "label"
 
-# All fields we want except for ingredients
+# All fields we want except for ingredients and image
 requiredFields = [
-    "image",
     "url",
     "healthLabels",
     "calories",
@@ -22,10 +29,10 @@ requiredFields = [
 
 ingredientsFieldName = "ingredients"
 
+# All fields we want except for food
 ingredientsRequiredFields = [
     "quantity",
     "measure",
-    "food",
     "foodId"
 ]
 
@@ -39,7 +46,7 @@ def searchRecipes(keyword, count):
         recipe = recipe['recipe']
 
         curRecipe = {}
-        recipeName = recipe[recipeNameField]
+        recipeName = processString(recipe[recipeNameField])
 
         # API can return same recipes with different capitalization, so this
         # filters those out.
@@ -54,6 +61,16 @@ def searchRecipes(keyword, count):
                 rawValue = rawValue[0]
             curRecipe[field] = rawValue
         
+        with open("images/imageCounter.txt", "r+") as f:
+            imageName = int(f.read())
+            f.seek(0)
+            f.write(str(imageName + 1))
+        imageURL = recipe["image"]
+        imageData = requests.get(imageURL).content
+        with open(f"images/{imageName}.jpg", "wb") as f:
+            f.write(imageData)
+        curRecipe["imageName"] = f"{imageName}.jpg"
+
         ingredients = []
         alreadyAddedIngredientNames = []
         # This is assuming the ingredients for each recipe are returned as
@@ -63,13 +80,14 @@ def searchRecipes(keyword, count):
             # duplicate ingredients out. This doesn't catch all duplicate
             # ingredients as the same ingredient can be named differently
             # (e.g. 'cooking oil' and 'oil').
-            ingredientName = ingredient["food"].lower()
+            ingredientName = processString(ingredient["food"].lower())
             if ingredientName in alreadyAddedIngredientNames:
                 continue
             else:
                 alreadyAddedIngredientNames.append(ingredientName)
-            
-            curIngredient = {}
+
+            curIngredient = {}            
+            curIngredient["food"] = ingredientName
             for field in ingredientsRequiredFields:
                 curIngredient[field] = ingredient[field]
             ingredients.append(curIngredient)
