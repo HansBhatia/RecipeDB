@@ -106,12 +106,12 @@ elif selected2 == "Login/SignUp":
                     st.error('Passwords do not match!')
                 else:
                     u_obj = auth_lib.createUser(username, email, password, 'test.url')
-                    print(u_obj)
+
                     if u_obj != []:
-                        print('hi')
-                        st.success('Done, You may login now.')
-                        LoginSignUpT = 'Login'
-                        #st.experimental_rerun()
+                        st.session_state['logged_in'] = True
+                        st.session_state['user_obj'] = user_obj
+                        st.success('Done, You are logged in!')
+                        st.experimental_rerun()
                     else:
                         st.error('Error In Account Creation')
 elif selected2 == "Popular Recipes":

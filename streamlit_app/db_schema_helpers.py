@@ -28,7 +28,7 @@ def rec_table_to_posts(resp, add_index=False):
                 else:
                     st.text(item[1])
                 # col_name: time
-                st.text(f'Prep Time: {item[4]} minutes')
+                #st.text(f'Prep Time: {item[4]} minutes')
                 # col_name: calories
                 st.text(f'Calories: {item[3]} calories')
                 # col_name: cuisine
