@@ -17,7 +17,7 @@ CREATE TABLE User(
     userId int NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
-    password varchar(255) NOT NULL,
+    password BINARY(60) NOT NULL,
     profilePicture varchar(2500),
     PRIMARY KEY(userId),
     CONSTRAINT UC_user_email UNIQUE(email),
