@@ -110,7 +110,7 @@ INSERT IGNORE INTO Food (foodId, name) VALUES ('food_bhppgmha1u27voagb8eptbp9g37
 INSERT IGNORE INTO Ingredients (recipeId, foodId, measure, quantity) VALUES ((SELECT recipeId FROM Recipe WHERE name = 'Rarebit Pork Chops'), 'food_bhppgmha1u27voagb8eptbp9g376', 'gram', 50.0);
 INSERT IGNORE INTO Food (foodId, name) VALUES ('food_a34cdj5b0kyuhfbov30xcb50u4dv', 'mustard');
 INSERT IGNORE INTO Ingredients (recipeId, foodId, measure, quantity) VALUES ((SELECT recipeId FROM Recipe WHERE name = 'Rarebit Pork Chops'), 'food_a34cdj5b0kyuhfbov30xcb50u4dv', 'teaspoon', 2.0);
-INSERT IGNORE INTO Food (foodId, name) VALUES ('food_ayjzu0oak0shbnaeroxs8b6t9uyy', 'crème fraîche');
+INSERT IGNORE INTO Food (foodId, name) VALUES ('food_ayjzu0oak0shbnaeroxs8b6t9uyy', 'creme fraeche');
 INSERT IGNORE INTO Ingredients (recipeId, foodId, measure, quantity) VALUES ((SELECT recipeId FROM Recipe WHERE name = 'Rarebit Pork Chops'), 'food_ayjzu0oak0shbnaeroxs8b6t9uyy', 'teaspoon', 1.0);
 INSERT INTO RecipeRestrictions (recipeId, restrictionId) VALUES ((SELECT recipeId FROM Recipe WHERE name = 'Rarebit Pork Chops'), (SELECT restrictionId FROM DietRestrictions WHERE name = 'Sugar-Conscious'));
 INSERT INTO RecipeRestrictions (recipeId, restrictionId) VALUES ((SELECT recipeId FROM Recipe WHERE name = 'Rarebit Pork Chops'), (SELECT restrictionId FROM DietRestrictions WHERE name = 'Keto-Friendly'));

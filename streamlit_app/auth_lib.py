@@ -39,9 +39,10 @@ def validatePassword(username, inputPassword):
     try:
         # find hashed password in db
         resp = db.query(f"SELECT password FROM User WHERE username = '{username}'")[0][0]
+        bytes_formatted = (str(bytes(resp)).split("'")[1].split("'")[0]).encode('UTF-8')
         # if not(resp):
         #     return []
-        if bcrypt.checkpw(inputPassword.encode('UTF-8'), resp):
+        if bcrypt.checkpw(inputPassword.encode('UTF-8'), bytes_formatted):
             return findUser(username)
     except Exception as e:
         print(e)
