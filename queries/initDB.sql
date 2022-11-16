@@ -6,7 +6,7 @@ CREATE TABLE Recipe(
     calories int NOT NULL,
     time int NOT NULL,
     instructions varchar(2000) NOT NULL, -- May need to increase size
-    image varchar(2500) NOT NULL,
+    imageName varchar(100) NOT NULL,
     PRIMARY KEY(recipeId),
     CONSTRAINT UC_recipe_name UNIQUE(name)
 );
