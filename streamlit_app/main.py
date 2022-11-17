@@ -68,6 +68,7 @@ elif selected2 == "Search":
             # construct query
             if search_items[0] == '':
                 st.error('You must search for something!')
+                st.stop()
             elif len(search_items) > 1:
                 st.error('Multiple recipe searches: This feature is not supported.')
                 st.stop()
