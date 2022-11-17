@@ -15,7 +15,7 @@ def createMigrationFromJSON(jsonFile, migrationFileName):
         for _, recipes in data.items():
             for recipeName, recipeFields in recipes.items():
                 # Adding new recipe
-                sql = "INSERT INTO Recipe (name, cuisine, calories, time, instructions, imageName) VALUES ('{}', '{}', '{}', {}, '{}', '{}');".format(
+                sql = "INSERT IGNORE INTO Recipe (name, cuisine, calories, time, instructions, imageName) VALUES ('{}', '{}', '{}', {}, '{}', '{}');".format(
                     recipeName,
                     recipeFields['cuisineType'],
                     recipeFields['calories'],
@@ -50,7 +50,7 @@ def createMigrationFromJSON(jsonFile, migrationFileName):
                 
                 # Adding food restrictions
                 for healthLabel in recipeFields['healthLabels']:
-                    sql = "INSERT INTO RecipeRestrictions (recipeId, restrictionId) VALUES ({}, (SELECT restrictionId FROM DietRestrictions WHERE name = '{}'));".format(
+                    sql = "INSERT IGNORE INTO RecipeRestrictions (recipeId, restrictionId) VALUES ({}, (SELECT restrictionId FROM DietRestrictions WHERE name = '{}'));".format(
                         recipeIdNestedQuery,
                         healthLabel
                     )
