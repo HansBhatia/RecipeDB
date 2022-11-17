@@ -30,7 +30,8 @@ elif selected2 == "Search":
         query = st.text_input('Search')
         genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
         restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
-        submitted = st.form_submit_button("Go")
+        count = st.slider('Number of Recipes', 1, 25, 5)
+        submitted = st.form_submit_button("Search")
     if submitted:
         #st.write(f'you searched for {query}')
         search_items = list(map(lambda x: x.strip(), query.split(',')))
@@ -77,7 +78,8 @@ elif selected2 == "Search":
                     query_string += f' AND P.cnt = {len(restrictions)}' 
                 res_list = db.query(query_string)
         ###PRINT POSTS###
-        rec_table_to_posts(res_list)
+        st.write(f"{min(len(res_list), count)} recipes found.")
+        rec_table_to_posts(res_list[:count])
 elif selected2 == "Login/SignUp":
     if st.session_state['logged_in']:
         st.write('You are logged in as {}.'.format(
@@ -126,7 +128,7 @@ elif selected2 == "Login/SignUp":
                     else:
                         st.error('Error In Account Creation')
 elif selected2 == "Popular Recipes":
-    count = st.slider('Browse the top recipes:', 1, 100, 5)
+    count = st.slider('Browse the top recipes:', 1, 25, 5)
     
     query_string = get_top_n_recipes.format(count)
     second_query_string = get_unrated_recipes

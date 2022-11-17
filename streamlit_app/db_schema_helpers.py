@@ -38,10 +38,10 @@ def rec_table_to_posts(resp, add_index=False):
                 check_rating = recipe_id_to_rating.format(item[0])
                 res = db.query(check_rating)
                 if res == []:
-                    st.text('Number of Ratings: Not Rated Yet, be the first!')
+                    st.text('Number of Ratings: Not Rated Yet')
                 else:
                     st.text(f'Number of Ratings: {res[0][0]}')
-                st.write(f'Recipe URL: [link]({item[5]})')
+                st.write(f'[View Recipe Instructions]({item[5]})')
                 # IF a user has signed in, provide them functionality to edit ratings.
                 if user_signed_in:
                     with st.form('Rate' + str(c)):
