@@ -57,7 +57,7 @@ elif selected2 == "Search":
                     sub_q = food_to_recipe_id.format(f"{item}")
                     query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                     if len(restrictions):
-                        query_string += f'AND P.cnt = {len(restrictions)}' 
+                        query_string += f' AND P.cnt = {len(restrictions)}' 
                     resp = db.query(query_string)
                     if len(res_list):
                         res_list = list(set(res_list) & set(resp))
@@ -75,7 +75,7 @@ elif selected2 == "Search":
                 # get recipe objects
                 query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                 if len(restrictions):
-                    query_string += f'AND P.cnt = {len(restrictions)}' 
+                    query_string += f' AND P.cnt = {len(restrictions)}' 
                 resp = db.query(query_string)
         ###PRINT POSTS###
         rec_table_to_posts(resp)
