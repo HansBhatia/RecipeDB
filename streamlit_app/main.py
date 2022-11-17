@@ -46,13 +46,14 @@ elif selected2 == "Search":
                 restriction_filters += f"OR D.name = '{r}' "
         if(len(restrictions)):
             restriction_filters += ")"
+        res_list = []
         if genre == 'By Ingredients':
             # search by ingredient
             # construct query
             query_string = ''
-            res_list = []
             if search_items[0] == '':
                 st.error('You must search for something!')
+                st.stop()
             else:
                 for item in search_items:
                     sub_q = food_to_recipe_id.format(f"{item}")
