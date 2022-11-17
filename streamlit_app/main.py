@@ -38,8 +38,13 @@ elif selected2 == "Search":
         resp = []
         # create restrictions string
         restriction_filters = ''
-        for r in restrictions:
-            restriction_filters += f" AND D.name = '{r}'";
+        for c, r in enumerate(restrictions):
+            if(c == 0):
+                restriction_filters += f"AND (D.name = '{r}' "
+            else:
+                restriction_filters += f"OR D.name = '{r}' "
+        if(len(restrictions)):
+            restriction_filters += ")"
         if genre == 'By Ingredients':
             # search by ingredient
             # construct query
@@ -50,12 +55,12 @@ elif selected2 == "Search":
             else:
                 for item in search_items:
                     sub_q = food_to_recipe_id.format(f"{item}")
-                    query_string = recipe_from_id.format(f'({sub_q})')
-                    resp = db.query(query_string + restriction_filters)
+                    query_string = recipe_from_id.format(f'({sub_q})', restriction_filters, len(restrictions))
+                    resp = db.query(query_string)
                     if len(res_list):
                         res_list = list(set(res_list) & set(resp))
                     else:
-                        res_list = db.query(query_string + restriction_filters)
+                        res_list = db.query(query_string)
         else:
             # search by ingredient
             # construct query
@@ -66,8 +71,8 @@ elif selected2 == "Search":
             else:  
                 query_string = recipe_to_recipe_id.format(f"{search_items[0]}")
                 # get recipe objects
-                query_string = recipe_from_id.format(f'({query_string})')
-                resp = db.query(query_string + restriction_filters)
+                query_string = recipe_from_id.format(f'({query_string})', restriction_filters, len(restrictions))
+                resp = db.query(query_string)
         ###PRINT POSTS###
         rec_table_to_posts(resp)
 elif selected2 == "Login/SignUp":
