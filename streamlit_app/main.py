@@ -64,7 +64,6 @@ elif selected2 == "Search":
                     else:
                         res_list = db.query(query_string)
         else:
-            # search by ingredient
             # construct query
             if search_items[0] == '':
                 st.error('You must search for something!')
@@ -76,9 +75,9 @@ elif selected2 == "Search":
                 query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                 if len(restrictions):
                     query_string += f' AND P.cnt = {len(restrictions)}' 
-                resp = db.query(query_string)
+                res_list = db.query(query_string)
         ###PRINT POSTS###
-        rec_table_to_posts(resp)
+        rec_table_to_posts(res_list)
 elif selected2 == "Login/SignUp":
     if st.session_state['logged_in']:
         st.write('You are logged in as {}.'.format(
