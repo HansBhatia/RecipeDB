@@ -27,7 +27,7 @@ elif selected2 == "About":
         st.markdown(f.read())
 elif selected2 == "Search":
     with st.form("search_form"):
-        query = st.text_input('Search')
+        query = st.text_input('Keywords', placeholder = "chicken, salt, pepper")
         genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
         restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
         count = st.slider('Number of Recipes', 1, 25, 5)
@@ -70,8 +70,9 @@ elif selected2 == "Search":
                 st.error('You must search for something!')
             elif len(search_items) > 1:
                 st.error('Multiple recipe searches: This feature is not supported.')
+                st.stop()
             else:  
-                query_string = recipe_to_recipe_id.format(f"{search_items[0]}")
+                sub_q = recipe_to_recipe_id.format(f"{search_items[0]}")
                 # get recipe objects
                 query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                 if len(restrictions):
