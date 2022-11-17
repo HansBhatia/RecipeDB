@@ -14,6 +14,7 @@ def query(q: str, insert: bool = False): # query the database server
     try:
         cursor = cnx.cursor()
     except:
+        init_connection.clear()
         cnx = init_connection()
         cursor = cnx.cursor()
 
