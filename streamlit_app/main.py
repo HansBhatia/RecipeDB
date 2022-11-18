@@ -11,7 +11,7 @@ data_url = 'https://cdn.dribbble.com/users/4567683/screenshots/9244379/media/187
 selected2 = option_menu(None, ["Search", "Popular Recipes", "About", "Login/SignUp"],
 icons=['search', 'star', 'cloud-upload', 'user'],
 menu_icon="cast", default_index=0, orientation="horizontal")
-
+res_list = []
 # check logged in
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
