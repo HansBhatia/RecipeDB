@@ -16,7 +16,8 @@ menu_icon="cast", default_index=0, orientation="horizontal")
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
     st.session_state['user_obj'] = {}
-
+if 'posts' not in st.session_state:
+    st.session_state['posts'] = []
 if not(st.session_state['logged_in']):
     st.info('Please login to rate the recipes!', icon="ℹ️")
 if selected2 == "Home":
@@ -26,61 +27,60 @@ elif selected2 == "About":
     with open('../README.md') as f:
         st.markdown(f.read())
 elif selected2 == "Search":
-    with st.form("search_form"):
-        query = st.text_input('Keywords', placeholder = "chicken, salt, pepper")
-        genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
-        restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
-        count = st.slider('Number of Recipes', 1, 25, 5)
-        submitted = st.form_submit_button("Search")
-    if submitted:
-        #st.write(f'you searched for {query}')
-        search_items = list(map(lambda x: x.strip(), query.split(',')))
-        query_string = ''
-        resp = []
-        # create restrictions string
-        restriction_filters = ''
-        for c, r in enumerate(restrictions):
-            if(c == 0):
-                restriction_filters += f"AND (D.name = '{r}' "
-            else:
-                restriction_filters += f"OR D.name = '{r}' "
-        if(len(restrictions)):
-            restriction_filters += ")"
-        if genre == 'By Ingredients':
-            # search by ingredient
-            # construct query
-            query_string = ''
-            res_list = []
-            if search_items[0] == '':
-                st.error('You must search for something!')
-            else:
-                for item in search_items:
-                    sub_q = food_to_recipe_id.format(f"{item}")
-                    query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
-                    if len(restrictions):
-                        query_string += f' AND P.cnt = {len(restrictions)}' 
-                    resp = db.query(query_string)
-                    if len(res_list):
-                        res_list = list(set(res_list) & set(resp))
-                    else:
-                        res_list = db.query(query_string)
+    query = st.text_input('Keywords', placeholder = "chicken, salt, pepper")
+    genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
+    restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
+    count = st.slider('Number of Recipes', 1, 25, 5)
+    if st.button('refresh'):
+        st.experimental_rerun()
+    #st.write(f'you searched for {query}')
+    search_items = list(map(lambda x: x.strip(), query.split(',')))
+    query_string = ''
+    resp = []
+    # create restrictions string
+    restriction_filters = ''
+    for c, r in enumerate(restrictions):
+        if(c == 0):
+            restriction_filters += f"AND (D.name = '{r}' "
         else:
-            # construct query
-            if search_items[0] == '':
-                st.error('You must search for something!')
-            elif len(search_items) > 1:
-                st.error('Multiple recipe searches: This feature is not supported.')
-                st.stop()
-            else:  
-                sub_q = recipe_to_recipe_id.format(f"{search_items[0]}")
-                # get recipe objects
+            restriction_filters += f"OR D.name = '{r}' "
+    if(len(restrictions)):
+        restriction_filters += ")"
+    if genre == 'By Ingredients':
+        # search by ingredient
+        # construct query
+        query_string = ''
+        res_list = []
+        if search_items[0] == '':
+            st.error('You must search for something!')
+        else:
+            for item in search_items:
+                sub_q = food_to_recipe_id.format(f"{item}")
                 query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                 if len(restrictions):
                     query_string += f' AND P.cnt = {len(restrictions)}' 
-                res_list = db.query(query_string)
-        ###PRINT POSTS###
-        st.write(f"{min(len(res_list), count)} recipes found.")
-        rec_table_to_posts(res_list[:count])
+                resp = db.query(query_string)
+                if len(res_list):
+                    res_list = list(set(res_list) & set(resp))
+                else:
+                    res_list = db.query(query_string)
+    else:
+        # construct query
+        if search_items[0] == '':
+            st.error('You must search for something!')
+        elif len(search_items) > 1:
+            st.error('Multiple recipe searches: This feature is not supported.')
+            st.stop()
+        else:  
+            sub_q = recipe_to_recipe_id.format(f"{search_items[0]}")
+            # get recipe objects
+            query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
+            if len(restrictions):
+                query_string += f' AND P.cnt = {len(restrictions)}' 
+            res_list = db.query(query_string)
+    ###PRINT POSTS###
+    st.write(f"{min(len(res_list), count)} recipes found.")
+    rec_table_to_posts(res_list[:count])
 elif selected2 == "Login/SignUp":
     if st.session_state['logged_in']:
         st.write('You are logged in as {}.'.format(

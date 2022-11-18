@@ -34,6 +34,7 @@ def rec_table_to_posts(resp, add_index=False):
                 # col_name: cuisine
                 st.text(f'Cuisine: {item[2].title()}')
                 # col_name: rating
+                st.text(f'Average Rating: {round(item[7], 1)}')
                 # query the rating of the recipe since it is in a different table
                 check_rating = recipe_id_to_rating.format(item[0])
                 res = db.query(check_rating)
@@ -52,4 +53,4 @@ def rec_table_to_posts(resp, add_index=False):
                             print(query_string)
                             db.query(query_string, insert=True)
                             st.write("Thanks for your rating!")
-                            st.experimental_rerun()
+                            #st.experimental_rerun()
