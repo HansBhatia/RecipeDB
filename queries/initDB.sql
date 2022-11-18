@@ -24,16 +24,6 @@ CREATE TABLE User(
     CONSTRAINT UC_user_username UNIQUE(username)
 );
 
-CREATE TABLE FavoriteRecipes(
-    userId int NOT NULL,
-    recipeId int NOT NULL,
-    PRIMARY KEY(userId, recipeId),
-    CONSTRAINT FK_favrec_userId FOREIGN KEY(userId) REFERENCES User(userId),
-    CONSTRAINT FK_favrec_recipeId FOREIGN KEY(recipeId) REFERENCES Recipe(recipeId)
-);
-
-CREATE INDEX IDX_favrec_userId ON FavoriteRecipes(userId);
-
 CREATE TABLE Rating(
     userId int NOT NULL,
     recipeId int NOT NULL,
