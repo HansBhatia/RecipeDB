@@ -35,7 +35,10 @@ def rec_table_to_posts(resp, popr = False, add_index=False):
                 st.text(f'Cuisine: {item[2].title()}')
                 # col_name: rating
                 if(popr):
-                    st.text(f'Average Rating: {round(item[8], 1)}')
+                    if(len(item) > 8):
+                        st.text(f'Average Rating: {round(item[8], 1)}')
+                    else:
+                        st.text(f'Average Rating: N/A')
                 else:
                     st.text(f'Average Rating: {round(item[7], 1)}')
                 # query the rating of the recipe since it is in a different table
