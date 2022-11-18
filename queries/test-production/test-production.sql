@@ -28,9 +28,9 @@ LIMIT 10;
 
 -- R9
 SELECT *
-FROM Recipe AS r, AvgRating AS ar 
-WHERE r.recipeId = ar.recipeId
-ORDER BY ar DESC
+FROM Recipe AS r, NumRatings AS nr 
+WHERE r.recipeId = nr.recipeId
+ORDER BY nr DESC
 LIMIT 3;
 
 -- R10
