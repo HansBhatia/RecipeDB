@@ -138,4 +138,4 @@ elif selected2 == "Popular Recipes":
     tresp2 = db.query(second_query_string.format(remaining))
     resp = tresp + tresp2
     ###PRINT POSTS### MIGHT BE UNORDERED
-    rec_table_to_posts(resp, add_index=True)
+    rec_table_to_posts(resp, popr=True, add_index=True)
