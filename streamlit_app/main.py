@@ -38,71 +38,61 @@ elif selected2 == "Search":
     query_string = ''
     resp = []
     # create restrictions string
+    restriction_params = []
+    # create restrictions string
     restriction_filters = ''
     for c, r in enumerate(restrictions):
         if(c == 0):
-            restriction_filters += f"AND (D.name = '{r}' "
+            restriction_filters += f"AND (D.name = %s "
         else:
-            restriction_filters += f"OR D.name = '{r}' "
+            restriction_filters += f"OR D.name = %s "
+        restriction_params.append(r)
     if(len(restrictions)):
         restriction_filters += ")"
+        
     if genre == 'By Ingredients':
         # search by ingredient
         # construct query
         query_string = ''
-        resp = []
-        restriction_params = []
-        # create restrictions string
-        restriction_filters = ''
-        for c, r in enumerate(restrictions):
-            if(c == 0):
-                restriction_filters += f"AND (D.name = %s "
-            else:
-                restriction_filters += f"OR D.name = %s "
-            restriction_params.append(r)
-        if(len(restrictions)):
-            restriction_filters += ")"
-        if genre == 'By Ingredients':
-            # search by ingredient
-            # construct query
-            query_string = ''
-            res_list = []
-            if search_items[0] == '':
-                st.error('You must search for something!')
-            else:
-                for item in search_items:
-                    sub_q_params = [f'%{item}%']
-                    sub_q = food_to_recipe_id
-                    query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
-                    if len(restrictions):
-                        query_string += f' AND P.cnt = %s'
-                        sub_q_params.extend(restriction_params)
-                        sub_q_params.append(len(restrictions))
-                    resp = db.query(query_string, sub_q_params)
-                    if len(res_list):
-                        res_list = list(set(res_list) & set(resp))
-                    else:
-                        res_list = resp
+        res_list = []
+        added = False
+        if search_items[0] == '':
+            st.error('You must search for something!')
         else:
-            # construct query
-            if search_items[0] == '':
-                st.error('You must search for something!')
-            elif len(search_items) > 1:
-                st.error('Multiple recipe searches: This feature is not supported.')
-                st.stop()
-            else:  
-                sub_q_params = [f'%{search_items[0]}%']
-                sub_q = recipe_to_recipe_id
-                # get recipe objects
+            for item in search_items:
+                sub_q_params = [f'%{item}%']
+                sub_q = food_to_recipe_id
                 query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                 if len(restrictions):
                     query_string += f' AND P.cnt = %s'
                     sub_q_params.extend(restriction_params)
                     sub_q_params.append(len(restrictions))
-                res_list = db.query(query_string, sub_q_params)
-        ###PRINT POSTS###
-        st.write(f"{min(len(res_list), count)} recipes found.")
-        rec_table_to_posts(res_list[:count])
+                resp = db.query(query_string, sub_q_params)
+                if added:
+                    res_list = list(set(res_list) & set(resp))
+                else:
+                    res_list = resp
+                    added = True
+    else:
+        # construct query
+        if search_items[0] == '':
+            st.error('You must search for something!')
+        elif len(search_items) > 1:
+            st.error('Multiple recipe searches: This feature is not supported.')
+            st.stop()
+        else:  
+            sub_q_params = [f'%{search_items[0]}%']
+            sub_q = recipe_to_recipe_id
+            # get recipe objects
+            query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
+            if len(restrictions):
+                query_string += f' AND P.cnt = %s'
+                sub_q_params.extend(restriction_params)
+                sub_q_params.append(len(restrictions))
+            res_list = db.query(query_string, sub_q_params)
+    ###PRINT POSTS###
+    st.write(f"{min(len(res_list), count)} recipes found.")
+    rec_table_to_posts(res_list[:count])
 elif selected2 == "Login/SignUp":
     if st.session_state['logged_in']:
         st.write('You are logged in as {}.'.format(
