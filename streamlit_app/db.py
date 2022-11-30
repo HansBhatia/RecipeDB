@@ -9,7 +9,7 @@ def init_connection(): # start a websocket to the database server
 cnx = init_connection()
 
 @st.experimental_memo(ttl=600, show_spinner=False)
-def query(q: str, insert: bool = False): # query the database server
+def query(q: str, params=None, insert: bool = False): # query the database server
     try:
         cursor = cnx.cursor()
     except:
@@ -18,7 +18,10 @@ def query(q: str, insert: bool = False): # query the database server
         cursor = cnx.cursor()
 
     try:
-        cursor.execute(q)
+        if params:
+            cursor.execute(q, params)
+        else:
+            cursor.execute(q)
     except Exception as e:
         print(e)
         return []

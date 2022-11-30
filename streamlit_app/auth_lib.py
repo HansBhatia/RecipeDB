@@ -6,7 +6,7 @@ import bcrypt
 def createUser(username, email, password, profilePicture):
     try:
         password = bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt())
-        resp = db.query(f'INSERT INTO User (username, email, password, profilePicture) VALUES("{username}","{email}","{password}","{profilePicture}")', insert=True)
+        resp = db.query('INSERT INTO User (username, email, password, profilePicture) VALUES(%s, %s, %s, %s)', (username, email, password, profilePicture), insert=True)
         return findUser(username)
     except Exception as e:
         print(e)
@@ -18,7 +18,7 @@ def createUser(username, email, password, profilePicture):
 
 def findUser(username):
     try:
-        resp = db.query(f"SELECT * FROM User WHERE username = '{username}'")[0] # since unique
+        resp = db.query(f"SELECT * FROM User WHERE username = %s", (username))[0] # since unique
         user = {
             'id': resp[0],
             'username': resp[1],
@@ -38,7 +38,7 @@ def findUser(username):
 def validatePassword(username, inputPassword):
     try:
         # find hashed password in db
-        resp = db.query(f"SELECT password FROM User WHERE username = '{username}'")[0][0]
+        resp = db.query(f"SELECT password FROM User WHERE username = %s", (username))[0][0]
         bytes_formatted = (str(bytes(resp)).split("'")[1].split("'")[0]).encode('UTF-8')
         # if not(resp):
         #     return []
@@ -57,7 +57,7 @@ def validatePassword(username, inputPassword):
 def updatePassword(username, inputPassword, newPassword):
     try:
         if(validatePassword(username, inputPassword)):
-            resp = db.query(f"UPDATE User SET password = '{newPassword}' WHERE username = '{username}'")
+            resp = db.query(f"UPDATE User SET password = %s WHERE username = %s", (newPassword, username))
         return result[0]
     except Exception as e:
         print(e)

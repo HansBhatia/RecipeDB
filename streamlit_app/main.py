@@ -37,13 +37,15 @@ elif selected2 == "Search":
         search_items = list(map(lambda x: x.strip(), query.split(',')))
         query_string = ''
         resp = []
+        restriction_params = []
         # create restrictions string
         restriction_filters = ''
         for c, r in enumerate(restrictions):
             if(c == 0):
-                restriction_filters += f"AND (D.name = '{r}' "
+                restriction_filters += f"AND (D.name = %s "
             else:
-                restriction_filters += f"OR D.name = '{r}' "
+                restriction_filters += f"OR D.name = %s "
+            restriction_params.append(r)
         if(len(restrictions)):
             restriction_filters += ")"
         if genre == 'By Ingredients':
@@ -55,15 +57,18 @@ elif selected2 == "Search":
                 st.error('You must search for something!')
             else:
                 for item in search_items:
-                    sub_q = food_to_recipe_id.format(f"{item}")
+                    sub_q_params = [f'%{item}%']
+                    sub_q = food_to_recipe_id
                     query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                     if len(restrictions):
-                        query_string += f' AND P.cnt = {len(restrictions)}' 
-                    resp = db.query(query_string)
+                        query_string += f' AND P.cnt = %s'
+                        sub_q_params.extend(restriction_params)
+                        sub_q_params.append(len(restrictions))
+                    resp = db.query(query_string, sub_q_params)
                     if len(res_list):
                         res_list = list(set(res_list) & set(resp))
                     else:
-                        res_list = db.query(query_string)
+                        res_list = resp
         else:
             # construct query
             if search_items[0] == '':
@@ -72,12 +77,15 @@ elif selected2 == "Search":
                 st.error('Multiple recipe searches: This feature is not supported.')
                 st.stop()
             else:  
-                sub_q = recipe_to_recipe_id.format(f"{search_items[0]}")
+                sub_q_params = [f'%{search_items[0]}%']
+                sub_q = recipe_to_recipe_id
                 # get recipe objects
                 query_string = recipe_from_id.format(f'({sub_q})', restriction_filters) 
                 if len(restrictions):
-                    query_string += f' AND P.cnt = {len(restrictions)}' 
-                res_list = db.query(query_string)
+                    query_string += f' AND P.cnt = %s'
+                    sub_q_params.extend(restriction_params)
+                    sub_q_params.append(len(restrictions))
+                res_list = db.query(query_string, sub_q_params)
         ###PRINT POSTS###
         st.write(f"{min(len(res_list), count)} recipes found.")
         rec_table_to_posts(res_list[:count])
@@ -130,12 +138,9 @@ elif selected2 == "Login/SignUp":
                         st.error('Error In Account Creation')
 elif selected2 == "Popular Recipes":
     count = st.slider('Browse the top recipes:', 1, 25, 5)
-    
-    query_string = get_top_n_recipes.format(count)
-    second_query_string = get_unrated_recipes
-    tresp = db.query(query_string)
+    tresp = db.query(get_top_n_recipes, (count))
     remaining = count - len(tresp)
-    tresp2 = db.query(second_query_string.format(remaining))
+    tresp2 = db.query(get_unrated_recipes, (remaining))
     resp = tresp + tresp2
     ###PRINT POSTS### MIGHT BE UNORDERED
     rec_table_to_posts(resp, add_index=True)
