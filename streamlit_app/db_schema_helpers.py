@@ -8,7 +8,7 @@ from io import BytesIO
 
 # This function is used to output each of the recipe cards given a db response of a recipe table resp.
 # add_index is a boolean flag if we want to have some sort of order mentioned on the card (eg. most popular recipes in order).
-def rec_table_to_posts(resp, add_index=False):
+def rec_table_to_posts(resp, popr = False, add_index=False):
     user_signed_in = st.session_state['logged_in']
     for c, item in enumerate(resp):
             image_container, description_container = st.columns([2, 2])
@@ -34,6 +34,16 @@ def rec_table_to_posts(resp, add_index=False):
                 # col_name: cuisine
                 st.text(f'Cuisine: {item[2].title()}')
                 # col_name: rating
+                if(popr):
+                    if(len(item) > 8 and int(item[8])):
+                        st.text(f'Average Rating: {round(item[8], 1)}')
+                    else:
+                        st.text(f'Average Rating: Not Rated')
+                else:
+                    if(len(item) > 7 and int(item[7])):
+                        st.text(f'Average Rating: {round(item[7], 1)}')
+                    else:
+                        st.text(f'Average Rating: Not Rated')
                 # query the rating of the recipe since it is in a different table
                 check_rating = recipe_id_to_rating.format(item[0])
                 res = db.query(check_rating)
@@ -52,4 +62,4 @@ def rec_table_to_posts(resp, add_index=False):
                             print(query_string)
                             db.query(query_string, insert=True)
                             st.write("Thanks for your rating!")
-                            st.experimental_rerun()
+                            #st.experimental_rerun()

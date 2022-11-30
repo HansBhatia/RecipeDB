@@ -11,6 +11,7 @@ CREATE TABLE Recipe(
     CONSTRAINT UC_recipe_name UNIQUE(name)
 );
 
+CREATE INDEX IDX_recipe_name ON Recipe(name);
 CREATE INDEX IDX_recipe_cuisine ON Recipe(cuisine);
 
 CREATE TABLE User(
@@ -23,16 +24,6 @@ CREATE TABLE User(
     CONSTRAINT UC_user_email UNIQUE(email),
     CONSTRAINT UC_user_username UNIQUE(username)
 );
-
-CREATE TABLE FavoriteRecipes(
-    userId int NOT NULL,
-    recipeId int NOT NULL,
-    PRIMARY KEY(userId, recipeId),
-    CONSTRAINT FK_favrec_userId FOREIGN KEY(userId) REFERENCES User(userId),
-    CONSTRAINT FK_favrec_recipeId FOREIGN KEY(recipeId) REFERENCES Recipe(recipeId)
-);
-
-CREATE INDEX IDX_favrec_userId ON FavoriteRecipes(userId);
 
 CREATE TABLE Rating(
     userId int NOT NULL,
@@ -52,6 +43,9 @@ CREATE TABLE Food(
     PRIMARY KEY(foodId),
     CONSTRAINT UC_food_name UNIQUE(name)
 );
+
+CREATE INDEX IDX_food_foodId ON Food(foodId);
+CREATE INDEX IDX_food_name ON Food(name);
 
 CREATE TABLE Ingredients(
     recipeId int NOT NULL,
@@ -91,9 +85,16 @@ CREATE TABLE AppliedRecipeMigrations(
 
 -- Views
 CREATE VIEW AvgRating AS
-    SELECT recipeId, AVG(value) AS ar
-    FROM Rating
-    GROUP BY recipeId;
+	SELECT recipeId, ar FROM (
+	    SELECT recipeId, AVG(value) AS ar
+        FROM Rating
+        GROUP BY recipeId) a
+	UNION (
+        SELECT recipeId, 0 AS ar
+        FROM Recipe
+        WHERE recipeId NOT IN (
+            SELECT recipeId
+            FROM Rating));
 
 CREATE VIEW NumRatings AS
     SELECT recipeId, COUNT(*) AS nr

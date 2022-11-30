@@ -17,7 +17,6 @@ DROP TABLE DietRestrictions;
 DROP TABLE Ingredients;
 DROP TABLE Food;
 DROP TABLE Rating;
-DROP TABLE FavoriteRecipes;
 DROP TABLE User;
 DROP TABLE Recipe;
 

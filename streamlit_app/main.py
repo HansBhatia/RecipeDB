@@ -11,12 +11,13 @@ data_url = 'https://cdn.dribbble.com/users/4567683/screenshots/9244379/media/187
 selected2 = option_menu(None, ["Search", "Popular Recipes", "About", "Login/SignUp"],
 icons=['search', 'star', 'cloud-upload', 'user'],
 menu_icon="cast", default_index=0, orientation="horizontal")
-
+res_list = []
 # check logged in
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
     st.session_state['user_obj'] = {}
-
+if 'posts' not in st.session_state:
+    st.session_state['posts'] = []
 if not(st.session_state['logged_in']):
     st.info('Please login to rate the recipes!', icon="ℹ️")
 if selected2 == "Home":
@@ -26,15 +27,28 @@ elif selected2 == "About":
     with open('../README.md') as f:
         st.markdown(f.read())
 elif selected2 == "Search":
-    with st.form("search_form"):
-        query = st.text_input('Keywords', placeholder = "chicken, salt, pepper")
-        genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
-        restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
-        count = st.slider('Number of Recipes', 1, 25, 5)
-        submitted = st.form_submit_button("Search")
-    if submitted:
-        #st.write(f'you searched for {query}')
-        search_items = list(map(lambda x: x.strip(), query.split(',')))
+    query = st.text_input('Keywords', placeholder = "chicken, salt, pepper")
+    genre = st.radio("Type", ('By Ingredients', 'By Recipe'))
+    restrictions = st.multiselect("Restrictions", ('Alcohol-Cocktail', 'Alcohol-Free', 'Celery-Free', 'Crustacean-Free', 'Dairy-Free', 'DASH', 'Egg-Free', 'Fish-Free', 'FODMAP-Free', 'Gluten-Free', 'Immuno-Supportive', 'Keto-Friendly', 'Kidney-Friendly', 'Kosher', 'Low Potassium', 'Low Sugar', 'Lupine-Free', 'Mediterranean', 'Mollusk-Free', 'Mustard-Free', 'No Oil Added', 'Paleo', 'Peanut-Free', 'Pecatarian', 'Pork-Free', 'Red-Meat-Free', 'Sesame-Free', 'Shellfish-Free', 'Soy-Free', 'Sugar-Conscious', 'Sulfite-Free', 'Tree-Nut-Free', 'Vegan', 'Vegetarian', 'Wheat-Free'))
+    count = st.slider('Number of Recipes', 1, 25, 5)
+    if st.button('refresh'):
+        st.experimental_rerun()
+    #st.write(f'you searched for {query}')
+    search_items = list(map(lambda x: x.strip(), query.split(',')))
+    query_string = ''
+    resp = []
+    # create restrictions string
+    restriction_filters = ''
+    for c, r in enumerate(restrictions):
+        if(c == 0):
+            restriction_filters += f"AND (D.name = '{r}' "
+        else:
+            restriction_filters += f"OR D.name = '{r}' "
+    if(len(restrictions)):
+        restriction_filters += ")"
+    if genre == 'By Ingredients':
+        # search by ingredient
+        # construct query
         query_string = ''
         resp = []
         restriction_params = []
@@ -143,4 +157,4 @@ elif selected2 == "Popular Recipes":
     tresp2 = db.query(get_unrated_recipes, (remaining))
     resp = tresp + tresp2
     ###PRINT POSTS### MIGHT BE UNORDERED
-    rec_table_to_posts(resp, add_index=True)
+    rec_table_to_posts(resp, popr=True, add_index=True)
