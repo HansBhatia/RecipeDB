@@ -4,10 +4,10 @@ FROM Recipe
 WHERE recipeId IN (
 	SELECT recipeId
 	FROM Ingredients
-	WHERE foodId = (
+	WHERE foodId IN (
 		SELECT foodId
-		FROM Food
-		WHERE name = "Chicken"));
+        FROM Food
+        WHERE MATCH(name) AGAINST('Chicken')));
 
 -- R7
 SELECT *
@@ -28,9 +28,9 @@ LIMIT 10;
 
 -- R9
 SELECT *
-FROM Recipe AS r, NumRatings AS nr 
-WHERE r.recipeId = nr.recipeId
-ORDER BY nr DESC
+FROM Recipe AS r, AvgRating AS ar 
+WHERE r.recipeId = ar.recipeId
+ORDER BY ar DESC
 LIMIT 3;
 
 -- R10

@@ -12,7 +12,6 @@ CREATE TABLE Recipe(
 );
 
 CREATE INDEX IDX_recipe_name ON Recipe(name);
-CREATE INDEX IDX_recipe_cuisine ON Recipe(cuisine);
 
 CREATE TABLE User(
     userId int NOT NULL AUTO_INCREMENT,
@@ -35,17 +34,13 @@ CREATE TABLE Rating(
     CONSTRAINT CHK_rating_value CHECK(value >= 1 AND value <= 5)
 );
 
-CREATE INDEX IDX_rating_recipeId ON Rating(recipeId);
-
 CREATE TABLE Food(
     foodId varchar(255) NOT NULL,
     name varchar(255) NOT NULL,
     PRIMARY KEY(foodId),
-    CONSTRAINT UC_food_name UNIQUE(name)
+    CONSTRAINT UC_food_name UNIQUE(name),
+    FULLTEXT(name)
 );
-
-CREATE INDEX IDX_food_foodId ON Food(foodId);
-CREATE INDEX IDX_food_name ON Food(name);
 
 CREATE TABLE Ingredients(
     recipeId int NOT NULL,
@@ -56,9 +51,6 @@ CREATE TABLE Ingredients(
     CONSTRAINT FK_ingred_recipeId FOREIGN KEY(recipeId) REFERENCES Recipe(recipeId),
     CONSTRAINT FK_ingred_foodId FOREIGN KEY(foodId) REFERENCES Food(foodId)
 );
-
-CREATE INDEX IDX_ingred_recipeId ON Ingredients(recipeId);
-CREATE INDEX IDX_ingred_foodId ON Ingredients(foodId);
 
 CREATE TABLE DietRestrictions(
     restrictionId int NOT NULL AUTO_INCREMENT,
@@ -74,9 +66,6 @@ CREATE TABLE RecipeRestrictions(
     CONSTRAINT FK_recres_recipeId FOREIGN KEY(recipeId) REFERENCES Recipe(recipeId),
     CONSTRAINT FK_recres_restrictionId FOREIGN KEY(restrictionId) REFERENCES DietRestrictions(restrictionId)
 );
-
-CREATE INDEX IDX_recres_recipeId ON RecipeRestrictions(recipeId);
-CREATE INDEX IDX_recres_restrictionId ON RecipeRestrictions(restrictionId);
 
 -- Tables for managing database migration information
 CREATE TABLE AppliedRecipeMigrations(
